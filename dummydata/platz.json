@@ -1,0 +1,134 @@
+
+[
+  {
+    "PlatzId": "862c45f9g3d3c4f345678901",
+    "eigenschaften": {
+      "Tisch": "Tisch A1",
+      "Monitor": "24 Zoll",
+      "Fensterplatz": "Ja",
+      "TischArt": "Höhenverstellbar",
+      "Barrierefreiheit": "Nicht Rollstuhlgerecht",
+      "Akustik": "Keine Lärmisolierung",
+      "Arbeitsplatte": "Erweitert",
+      "Stuhl": "Ergonomisch"
+    }
+  },
+  {
+    "PlatzId": "862c45f9g3d3c4f345678902",
+    "eigenschaften": {
+      "Tisch": "Tisch A2",
+      "Monitor": "27 Zoll",
+      "Fensterplatz": "Nein",
+      "TischArt": "Standard",
+      "Barrierefreiheit": "Rollstuhlgerecht",
+      "Akustik": "Lärmisolierung vorhanden",
+      "Arbeitsplatte": "Standard",
+      "Stuhl": "Standard"
+    }
+  },
+  {
+    "PlatzId": "862c45f9g3d3c4f345678903",
+    "eigenschaften": {
+      "Tisch": "Tisch A3",
+      "Monitor": "24 Zoll",
+      "Fensterplatz": "Ja",
+      "TischArt": "Höhenverstellbar",
+      "Barrierefreiheit": "Rollstuhlgerecht",
+      "Akustik": "Keine Lärmisolierung",
+      "Arbeitsplatte": "Erweitert",
+      "Stuhl": "Ergonomisch"
+    }
+  },
+  {
+    "PlatzId": "862c45f9g3d3c4f345678904",
+    "eigenschaften": {
+      "Tisch": "Tisch B1",
+      "Monitor": "32 Zoll",
+      "Fensterplatz": "Nein",
+      "TischArt": "Höhenverstellbar",
+      "Barrierefreiheit": "Nicht Rollstuhlgerecht",
+      "Akustik": "Lärmisolierung vorhanden",
+      "Arbeitsplatte": "Standard",
+      "Stuhl": "Ergonomisch"
+    }
+  },
+  {
+    "PlatzId": "862c45f9g3d3c4f345678905",
+    "eigenschaften": {
+      "Tisch": "Tisch B2",
+      "Monitor": "27 Zoll",
+      "Fensterplatz": "Ja",
+      "TischArt": "Standard",
+      "Barrierefreiheit": "Rollstuhlgerecht",
+      "Akustik": "Keine Lärmisolierung",
+      "Arbeitsplatte": "Erweitert",
+      "Stuhl": "Standard"
+    }
+  },
+  {
+    "PlatzId": "862c45f9g3d3c4f345678906",
+    "eigenschaften": {
+      "Tisch": "Tisch B3",
+      "Monitor": "24 Zoll",
+      "Fensterplatz": "Nein",
+      "TischArt": "Höhenverstellbar",
+      "Barrierefreiheit": "Nicht Rollstuhlgerecht",
+      "Akustik": "Lärmisolierung vorhanden",
+      "Arbeitsplatte": "Erweitert",
+      "Stuhl": "Ergonomisch"
+    }
+  },
+  {
+    "PlatzId": "862c45f9g3d3c4f345678907",
+    "eigenschaften": {
+      "Tisch": "Tisch C1",
+      "Monitor": "27 Zoll",
+      "Fensterplatz": "Ja",
+      "TischArt": "Standard",
+      "Barrierefreiheit": "Rollstuhlgerecht",
+      "Akustik": "Keine Lärmisolierung",
+      "Arbeitsplatte": "Standard",
+      "Stuhl": "Standard"
+    }
+  },
+  {
+    "PlatzId": "862c45f9g3d3c4f345678908",
+    "eigenschaften": {
+      "Tisch": "Tisch C2",
+      "Monitor": "24 Zoll",
+      "Fensterplatz": "Nein",
+      "TischArt": "Höhenverstellbar",
+      "Barrierefreiheit": "Nicht Rollstuhlgerecht",
+      "Akustik": "Lärmisolierung vorhanden",
+      "Arbeitsplatte": "Erweitert",
+      "Stuhl": "Ergonomisch"
+    }
+  },
+  {
+    "PlatzId": "862c45f9g3d3c4f345678909",
+    "eigenschaften": {
+      "Tisch": "Tisch C3",
+      "Monitor": "32 Zoll",
+      "Fensterplatz": "Ja",
+      "TischArt": "Standard",
+      "Barrierefreiheit": "Rollstuhlgerecht",
+      "Akustik": "Keine Lärmisolierung",
+      "Arbeitsplatte": "Standard",
+      "Stuhl": "Ergonomisch"
+    }
+  },
+  {
+    "PlatzId": "862c45f9g3d3c4f345678910",
+    "eigenschaften": {
+      "Tisch": "Tisch D1",
+      "Monitor": "24 Zoll",
+      "Fensterplatz": "Nein",
+      "TischArt": "Höhenverstellbar",
+      "Barrierefreiheit": "Nicht Rollstuhlgerecht",
+      "Akustik": "Lärmisolierung vorhanden",
+      "Arbeitsplatte": "Erweitert",
+      "Stuhl": "Standard"
+    }
+  }
+
+]
