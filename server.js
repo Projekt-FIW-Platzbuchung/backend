@@ -18,6 +18,6 @@ app.listen(PORT, (error) => {
     if (error) {
         console.error('Serverstart fehlgeschlagen:', error);
     } else {
-        console.log(`Server läuft auf http://localhost:${PORT}`);
+        console.log(`Server läuft auf ${PORT}`);
     }
 });
