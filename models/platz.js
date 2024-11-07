@@ -1,4 +1,7 @@
-export interface Platz {
+
+const mongoose = require('mongoose');
+
+const platzSchema = new mongoose.Schema({
     PlatzId: { type: Number, required: true }, // Platz-ID als Zahl
     eigenschaften: {
         Tisch: { type: String, required: false }, // Tisch als String
@@ -13,4 +16,7 @@ export interface Platz {
         //monitor defekt
         //notizenfeld
     }
-}
+});
+
+
+module.exports = mongoose.model('Platz', platzSchema, 'platz');
