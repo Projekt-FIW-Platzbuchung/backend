@@ -37,4 +37,26 @@ router.get('/seat', async(req, res) => {
     }
 });
 
+// GET-Anfrage aggregation (~ JOIN bei SQL) aus plaetzen und ihrem buchungsstatus
+router.get('/seat', async (req, res) => {
+    try {
+      const allSeatData = await seat.aggregate([
+        {
+          $lookup: {
+            from: 'bookings', // Name der Collection, mit der verbunden werden soll
+            localField: '_id', // Feld in der Seat-Collection
+            foreignField: 'PlatzId', // Feld in der bookings-Collection
+            
+            as: 'reservations' // Name des resultierenden Array-Feldes
+          }
+        }
+      ]);
+      console.log(allSeatData);
+      res.json(allSeatData);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
+  
+
 module.exports = router;
