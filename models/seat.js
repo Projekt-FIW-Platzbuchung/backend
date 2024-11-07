@@ -11,7 +11,7 @@ const seatScheme = new mongoose.Schema({
         Accessibility: { type: String, required: false }, // Rollstuhlgerecht/Nicht Rollstuhlgerecht
         Acoustics: { type: String, required: false }, // Lärmisolierung vorhanden/nicht vorhanden
         WorkTop: { type: String, required: false }, // Standard/Erweitert
-        Stuhl: { type: String, required: false } // Art des Stuhls
+        Chair: { type: String, required: false } // Art des Stuhls
         //hdmi kabel
         //monitor defekt
         //notizenfeld
