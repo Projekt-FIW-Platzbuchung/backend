@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const seat = require('./models/seat');
-const bookings = require('./models/bookings');
+const platz = require('./models/platz');
+const buchungen = require('./models/buchungen');
 const user = require('./models/user');
 
 // eine GET-Anfrage alle user
@@ -16,20 +16,31 @@ router.get('/user', async(req, res) => {
 });
 
 // eine GET-Anfrage alle buchungen
-router.get('/bookings', async(req, res) => {
+router.get('/buchungen', async(req, res) => {
     try {
-        const allBookings = await bookings.find(); 
+        const allBookings = await buchungen.find(); 
         console.log(allBookings);
         res.json(allBookings);
     } catch (error) {
         res.status(500).send(error.message);
     }
 });
-
-// eine GET-Anfrage alle plätze
-router.get('/seat', async(req, res) => {
+router.get('/platz/:PlatzId', async(req, res) => {
+    const einPlatz = await platz.findOne({ PlatzId: req.params.PlatzId });
+    console.log(req.params);
+    if(einPlatz) {
+        res.send(einPlatz);
+    } else {
+        res.status(404);
+        res.send({
+            error: "platz does not exist!"
+        });
+    }
+});
+    // eine GET-Anfrage alle plätze
+router.get('/platz', async(req, res) => {
     try {
-        const allSeats = await seat.find(); 
+        const allSeats = await platz.find(); 
         console.log(allSeats);
         res.json(allSeats); 
     } catch (error) {

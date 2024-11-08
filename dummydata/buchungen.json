@@ -1,10 +1,9 @@
-
 [
   {
     "BuchungsId": "b1",
     "GebuchtePlätze": {
       "UserId": "1",
-      "PlatzId": "862c45f9g3d3c4f345678901",
+      "PlatzId": 1,
       "datum": "2023-10-01"
     }
   },
@@ -12,7 +11,7 @@
     "BuchungsId": "b2",
     "GebuchtePlätze": {
       "UserId": "2",
-      "PlatzId": "862c45f9g3d3c4f345678902",
+      "PlatzId": 2,
       "datum": "2023-10-02"
     }
   },
@@ -20,7 +19,7 @@
     "BuchungsId": "b3",
     "GebuchtePlätze": {
       "UserId": "3",
-      "PlatzId": "862c45f9g3d3c4f345678903",
+      "PlatzId": 3,
       "datum": "2023-10-03"
     }
   },
@@ -28,7 +27,7 @@
     "BuchungsId": "b4",
     "GebuchtePlätze": {
       "UserId": "4",
-      "PlatzId": "862c45f9g3d3c4f345678904",
+      "PlatzId": 4,
       "datum": "2023-10-04"
     }
   },
@@ -36,7 +35,7 @@
     "BuchungsId": "b5",
     "GebuchtePlätze": {
       "UserId": "5",
-      "PlatzId": "862c45f9g3d3c4f345678905",
+      "PlatzId": 5,
       "datum": "2023-10-05"
     }
   },
@@ -44,7 +43,7 @@
     "BuchungsId": "b6",
     "GebuchtePlätze": {
       "UserId": "6",
-      "PlatzId": "862c45f9g3d3c4f345678906",
+      "PlatzId": 6,
       "datum": "2023-10-06"
     }
   },
@@ -52,7 +51,7 @@
     "BuchungsId": "b7",
     "GebuchtePlätze": {
       "UserId": "7",
-      "PlatzId": "862c45f9g3d3c4f345678907",
+      "PlatzId": 7,
       "datum": "2023-10-07"
     }
   },
@@ -60,7 +59,7 @@
     "BuchungsId": "b8",
     "GebuchtePlätze": {
       "UserId": "8",
-      "PlatzId": "862c45f9g3d3c4f345678908",
+      "PlatzId": 8,
       "datum": "2023-10-08"
     }
   },
@@ -68,7 +67,7 @@
     "BuchungsId": "b9",
     "GebuchtePlätze": {
       "UserId": "9",
-      "PlatzId": "862c45f9g3d3c4f345678909",
+      "PlatzId": 9,
       "datum": "2023-10-09"
     }
   },
@@ -76,16 +75,15 @@
     "BuchungsId": "b10",
     "GebuchtePlätze": {
       "UserId": "10",
-      "PlatzId": "862c45f9g3d3c4f345678910",
+      "PlatzId": 10,
       "datum": "2023-10-10"
     }
   },
-
   {
     "BuchungsId": "b11",
     "GebuchtePlätze": {
       "UserId": "11",
-      "PlatzId": "862c45f9g3d3c4f345678901",
+      "PlatzId": 1,
       "datum": "2023-10-11"
     }
   },
@@ -93,7 +91,7 @@
     "BuchungsId": "b12",
     "GebuchtePlätze": {
       "UserId": "12",
-      "PlatzId": "862c45f9g3d3c4f345678902",
+      "PlatzId": 2,
       "datum": "2023-10-12"
     }
   },
@@ -101,7 +99,7 @@
     "BuchungsId": "b13",
     "GebuchtePlätze": {
       "UserId": "13",
-      "PlatzId": "862c45f9g3d3c4f345678903",
+      "PlatzId": 3,
       "datum": "2023-10-13"
     }
   },
@@ -109,7 +107,7 @@
     "BuchungsId": "b14",
     "GebuchtePlätze": {
       "UserId": "14",
-      "PlatzId": "862c45f9g3d3c4f345678904",
+      "PlatzId": 4,
       "datum": "2023-10-14"
     }
   },
@@ -117,7 +115,7 @@
     "BuchungsId": "b15",
     "GebuchtePlätze": {
       "UserId": "15",
-      "PlatzId": "862c45f9g3d3c4f345678905",
+      "PlatzId": 5,
       "datum": "2023-10-15"
     }
   },
@@ -125,7 +123,7 @@
     "BuchungsId": "b16",
     "GebuchtePlätze": {
       "UserId": "16",
-      "PlatzId": "862c45f9g3d3c4f345678906",
+      "PlatzId": 6,
       "datum": "2023-10-16"
     }
   },
@@ -133,7 +131,7 @@
     "BuchungsId": "b17",
     "GebuchtePlätze": {
       "UserId": "17",
-      "PlatzId": "862c45f9g3d3c4f345678907",
+      "PlatzId": 7,
       "datum": "2023-10-17"
     }
   },
@@ -141,7 +139,7 @@
     "BuchungsId": "b18",
     "GebuchtePlätze": {
       "UserId": "18",
-      "PlatzId": "862c45f9g3d3c4f345678908",
+      "PlatzId": 8,
       "datum": "2023-10-18"
     }
   },
@@ -149,7 +147,7 @@
     "BuchungsId": "b19",
     "GebuchtePlätze": {
       "UserId": "19",
-      "PlatzId": "862c45f9g3d3c4f345678909",
+      "PlatzId": 9,
       "datum": "2023-10-19"
     }
   },
@@ -157,7 +155,7 @@
     "BuchungsId": "b20",
     "GebuchtePlätze": {
       "UserId": "20",
-      "PlatzId": "862c45f9g3d3c4f345678910",
+      "PlatzId": 10,
       "datum": "2023-10-20"
     }
   }
