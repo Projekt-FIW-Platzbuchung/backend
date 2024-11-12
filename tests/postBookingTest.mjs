@@ -1,7 +1,9 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const app = require('../server'); // Ersetzen Sie '../app' mit dem Pfad zu Ihrem Server
+import * as chai from 'chai';
+import chaiHttp from 'chai-http';
+import app from '../server.js';  // Stelle sicher, dass dein Server korrekt exportiert wird
+
 const { expect } = chai;
+
 
 chai.use(chaiHttp);
 
