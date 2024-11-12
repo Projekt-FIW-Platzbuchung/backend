@@ -37,4 +37,27 @@ router.get('/seat', async(req, res) => {
     }
 });
 
+//POST-Anfrage für booking
+router.post('/booking', async(req,res) => {
+   
+    const bookingsData={
+        bookingsId: req.body.bookingsId,
+        userId: req.body.userId,
+        seatId: req.body.seatId,
+        date: req.body.date
+    };
+    
+    try {
+
+        const newBooking = new bookings(bookingsData)
+        const savedBooking = await newBooking.save();
+        res.status(201).send(savedBooking);
+        
+    } catch (error) {
+        console.log(err.stack)
+        res.status(500).send('Fehler beim Speichern der Buchung');   
+    }
+
+});
+
 module.exports = router;
