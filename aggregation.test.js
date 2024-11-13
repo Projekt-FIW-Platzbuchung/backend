@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const routes = require("./routes");
 const mongoose = require("mongoose");
-const { enrichSeatsWithBookingInformation } = require("./routes");
+const { enrichSeatsWithBookingInformation } = require("./helpers_database_requests");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -30,7 +30,7 @@ describe("enrichSeatsWithBookingInformation", () => {
       console.log("PlatzId:", result.PlatzId);
       console.log(
         "Booking PlatzId:",
-        result.bookingDetails.gebuchtePlaetze.platzId
+        result.bookingDetails.platzId
       );
     });
 
@@ -38,9 +38,9 @@ describe("enrichSeatsWithBookingInformation", () => {
     expect(
       results.every(
         (result) =>
-          result.PlatzId === result.bookingDetails.gebuchtePlaetze.platzId
+          result.PlatzId === result.bookingDetails.PlatzId
       )
     ).toBe(true);
-    // expect(results.some(result => result.PlatzId === 'A1' && result.bookingDetails?.gebuchtePlaetze?.date === '2023-01-01')).toBe(true);
+   
   });
 });
