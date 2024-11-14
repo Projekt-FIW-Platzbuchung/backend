@@ -54,7 +54,7 @@ router.post('/booking', async(req,res) => {
         res.status(201).send(savedBooking);
         
     } catch (error) {
-        console.log(err.stack)
+        console.log(error)
         res.status(500).send('Fehler beim Speichern der Buchung');   
     }
 
