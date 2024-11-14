@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const platz = require('./models/platz');
-const buchungen = require('./models/buchungen');
+const platz = require('./models/seats');
+const buchungen = require('./models/bookings');
 const user = require('./models/user');
 
 // eine GET-Anfrage alle user
