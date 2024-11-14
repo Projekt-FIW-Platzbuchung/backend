@@ -37,7 +37,7 @@ async function bookingInformationByDate(date) {
           'bookingDetails.seatId': 1,
           'bookingDetails.date': 1,
           'bookingDetails.userId': 1,
-          //BuchungsId: '$bookingDetails.BuchungsId',
+         
           status: {
             $cond: [
               {
