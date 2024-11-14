@@ -1,8 +1,8 @@
 require("dotenv").config();
 const express = require("express");
-const routes = require("./routes");
+const routes = require("../routes.js");
 const mongoose = require("mongoose");
-const { bookingInformationByDate } = require("./helpers_database_requests.js");
+const { bookingInformationByDate } = require("../helpers_database_requests.js");
 
 const app = express();
 const PORT = process.env.PORT;

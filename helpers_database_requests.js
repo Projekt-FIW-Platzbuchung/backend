@@ -151,6 +151,7 @@ async function testAggregation(targetDate) {
         "bookingDetails.PlatzId": 1,
         //eigenschaften: 1,
         "bookingDetails.datum": 1,
+        "booking.Details.UserId": 1,
         status: {
           $cond: {
             if: { $eq: ["$bookingDetails", null] },

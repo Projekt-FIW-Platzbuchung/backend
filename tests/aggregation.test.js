@@ -1,8 +1,8 @@
 require("dotenv").config();
 const express = require("express");
-const routes = require("./routes");
+const routes = require("../routes");
 const mongoose = require("mongoose");
-const { enrichSeatsWithBookingInformation } = require("./helpers_database_requests");
+const { enrichSeatsWithBookingInformation } = require("../helpers_database_requests");
 
 const app = express();
 const PORT = process.env.PORT;
