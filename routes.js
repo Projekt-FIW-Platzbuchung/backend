@@ -47,7 +47,6 @@ router.get("/date", async (req, res) => {
       datum: "2023-10-10",
     });
 
-    // console.log(oneDate);
     res.json(oneDate);
   } catch (error) {
     console.error("Error fetching date:", error);
@@ -57,20 +56,8 @@ router.get("/date", async (req, res) => {
 router.get("/bookingstatus", async (req, res) => {
   aggregation = await bookingInformationByDate("2023-10-01");
   res.json(aggregation);
-  //console.log(aggregation);
 });
 
-/* router.get("/aggregation", async (req, res) => {
-  aggregation = await testAggregation("2023-10-01");
-  res.json(aggregation);
-  console.log(aggregation);
-}); */
-
-/* router.get("/status", async (req, res) => {
-  aggregation = await enrichSeatsWithBookingInformation();
-  res.json(aggregation);
-  console.log(aggregation);
-}); */
 
 
 module.exports = router;
