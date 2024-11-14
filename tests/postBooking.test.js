@@ -11,11 +11,6 @@ beforeAll(async () => {
     await mongoose.connect(dbUri); 
 });
 
-// Cleanup after each test
-afterEach(async () => {
-    await bookings.deleteMany({});
-});
-
 // Close the DB connection after all tests
 afterAll(async () => {
     await mongoose.connection.close();
