@@ -3,10 +3,6 @@ const express = require('express');
 const routes = require('./routes');
 const mongoose = require('mongoose');
 
-// console.log(typeof routes); // Dies zeigt an, ob es sich um ein Objekt, eine Funktion, etc. handelt
-// console.log(routes); // Dies gibt dir zusätzliche Informationen und zeigt das tatsächliche, importierte Objekt/Funktion
-
-
 const app = express();
 const PORT = process.env.PORT
 
