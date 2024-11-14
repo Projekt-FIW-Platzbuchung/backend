@@ -3,8 +3,10 @@ const router = express.Router();
 const seat = require("./models/seat");
 const bookings = require("./models/bookings");
 const user = require("./models/user");
-
+const cors = require("cors");
 const { bookingInformationByDate } = require('./helpers_database_requests.js'); 
+
+router.use(cors());
 
 // eine GET-Anfrage alle user
 router.get("/user", async (req, res) => {
