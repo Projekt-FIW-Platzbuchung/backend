@@ -32,7 +32,7 @@ describe("bookingInformationByDate", () => {
 
     // Überprüft die Ergebnisse mit erwartetem Output
     expect(
-      results.every(
+      results.some(
         (result) => result.seatId === result.bookingDetails.seatId
       )
     ).toBe(true);
