@@ -21,39 +21,21 @@ afterAll(async () => {
 
 describe("bookingInformationByDate", () => {
   beforeEach(async () => {});
-  it("should test if the PlatzIds match in the resulting aggregation", async () => {
-    // Ruft die Methode auf die getestet werden soll
+  it("should test if the seatIds match in the resulting aggregation", async () => {
     const results = await bookingInformationByDate("2023-10-10");
 
-    // logging der PlatzIds
+    // logging der seatId
     results.forEach((result) => {
-      console.log("PlatzId:", result.PlatzId);
-      console.log("Booking PlatzId:", result.bookingDetails.PlatzId);
+      console.log("setId:", result.seatId);
+      console.log("Booking seatId:", result.bookingDetails.seatId);
     });
 
     // Überprüft die Ergebnisse mit erwartetem Output
     expect(
       results.every(
-        (result) => result.PlatzId === result.bookingDetails.PlatzId
+        (result) => result.seatId === result.bookingDetails.seatId
       )
     ).toBe(true);
-  });
-
-  it("should test whether the date used to find the seats from booking is the right one ", async () => {
-    const dummyDate = "2023-10-10";
-    const results = await bookingInformationByDate(dummyDate);
-    // logging für debugging
-    console.log("dummyDate:", dummyDate);
-    results.forEach((result) => {
-        console.log("Booking datum: ", result.bookingDetails.datum);
-      });
-    expect(
-        results.some(
-            (result) => result.bookingDetails.datum === dummyDate
-        )
-
-    ).toBe(true);
-
   });
 });
 
@@ -66,11 +48,11 @@ describe("bookingInformationByDate", () => {
       // logging für debugging
       console.log("dummyDate:", dummyDate);
       results.forEach((result) => {
-          console.log("Booking datum: ", result.bookingDetails?.datum);
+          console.log("Booking date: ", result.bookingDetails?.date);
         });
       expect(
           results.some(
-              (result) => result.bookingDetails?.datum === dummyDate
+              (result) => result.bookingDetails?.date === dummyDate
           )
   
       ).toBe(true);
@@ -90,10 +72,10 @@ describe("bookingInformationByDate", () => {
       results.forEach((result) => {
         if (result.status === "gebucht") {
           // For "gebucht" status, ensure the booking date matches the target date
-          expect(result.bookingDetails?.datum).toBe(targetDate);
+          expect(result.bookingDetails?.date).toBe(targetDate);
         } else if (result.status === "frei") {
           // For "frei" status, ensure bookingDetails are either null or have a non-matching date
-          expect(result.bookingDetails?.datum).not.toBe(targetDate);
+          expect(result.bookingDetails?.date).not.toBe(targetDate);
         }
       });
     });
