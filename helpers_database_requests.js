@@ -32,8 +32,8 @@ async function bookingInformationByDate(date) {
       },
       {
         $project: {
-          PlatzId: 1,
-          eigenschaften: 1,
+          seatId: 1,
+          properties: 1,
           'bookingDetails.seatId': 1,
           'bookingDetails.date': 1,
           'bookingDetails.userId': 1,
