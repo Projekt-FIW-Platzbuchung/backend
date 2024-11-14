@@ -4,7 +4,6 @@ const seat = require("./models/seat");
 const bookings = require("./models/bookings");
 const user = require("./models/user");
 
-const { enrichBookingsWithSeatInformation } = require('./helpers_database_requests.js'); 
 const { bookingInformationByDate } = require('./helpers_database_requests.js'); 
 
 // eine GET-Anfrage alle user
