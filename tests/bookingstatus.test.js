@@ -26,7 +26,7 @@ describe("bookingInformationByDate", () => {
 
     // logging der seatId
     results.forEach((result) => {
-      console.log("setId:", result.seatId);
+      console.log("seatId:", result.seatId);
       console.log("Booking seatId:", result.bookingDetails.seatId);
     });
 
