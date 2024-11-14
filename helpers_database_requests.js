@@ -28,6 +28,7 @@ async function bookingInformationByDate(date) {
       {
         $addFields: {
           "bookingDetails.dateAsDate": { $toDate: "$bookingDetails.date" },
+        
         },
       },
       {
