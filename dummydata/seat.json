@@ -1,134 +1,263 @@
 
 [
   {
-    "PlatzId": "862c45f9g3d3c4f345678901",
-    "eigenschaften": {
-      "Tisch": "Tisch A1",
-      "Monitor": "24 Zoll",
-      "Fensterplatz": "Ja",
-      "TischArt": "Höhenverstellbar",
-      "Barrierefreiheit": "Nicht Rollstuhlgerecht",
-      "Akustik": "Keine Lärmisolierung",
-      "Arbeitsplatte": "Erweitert",
-      "Stuhl": "Ergonomisch"
+    "seatId": 1,
+    "properties": {
+      "table": "Tisch A1",
+      "monitor": "24 Zoll",
+      "windowSeat": "Ja",
+      "tableType": "höhenverstellbar",
+      "accessibility": "nicht rollstuhlgerecht",
+      "acoustics": "nicht lärmgeschützt",
+      "workTop": "erweiterbar",
+      "chair": "ergonomisch"
     }
   },
   {
-    "PlatzId": "862c45f9g3d3c4f345678902",
-    "eigenschaften": {
-      "Tisch": "Tisch A2",
-      "Monitor": "27 Zoll",
-      "Fensterplatz": "Nein",
-      "TischArt": "Standard",
-      "Barrierefreiheit": "Rollstuhlgerecht",
-      "Akustik": "Lärmisolierung vorhanden",
-      "Arbeitsplatte": "Standard",
-      "Stuhl": "Standard"
+    "seatId": 2,
+    "properties": {
+      "table": "Tisch B1",
+      "monitor": "27 Zoll",
+      "windowSeat": "Nein",
+      "tableType": "feststehend",
+      "accessibility": "nicht rollstuhlgerecht",
+      "acoustics": "lärmgeschützt",
+      "workTop": "fest",
+      "chair": "standard"
     }
   },
   {
-    "PlatzId": "862c45f9g3d3c4f345678903",
-    "eigenschaften": {
-      "Tisch": "Tisch A3",
-      "Monitor": "24 Zoll",
-      "Fensterplatz": "Ja",
-      "TischArt": "Höhenverstellbar",
-      "Barrierefreiheit": "Rollstuhlgerecht",
-      "Akustik": "Keine Lärmisolierung",
-      "Arbeitsplatte": "Erweitert",
-      "Stuhl": "Ergonomisch"
+    "seatId": 3,
+    "properties": {
+      "table": "Tisch C1",
+      "monitor": "32 Zoll",
+      "windowSeat": "Ja",
+      "tableType": "höhenverstellbar",
+      "accessibility": "rollstuhlgerecht",
+      "acoustics": "nicht lärmgeschützt",
+      "workTop": "erweiterbar",
+      "chair": "ergonomisch"
     }
   },
   {
-    "PlatzId": "862c45f9g3d3c4f345678904",
-    "eigenschaften": {
-      "Tisch": "Tisch B1",
-      "Monitor": "32 Zoll",
-      "Fensterplatz": "Nein",
-      "TischArt": "Höhenverstellbar",
-      "Barrierefreiheit": "Nicht Rollstuhlgerecht",
-      "Akustik": "Lärmisolierung vorhanden",
-      "Arbeitsplatte": "Standard",
-      "Stuhl": "Ergonomisch"
+    "seatId": 4,
+    "properties": {
+      "table": "Tisch D1",
+      "monitor": "kein Monitor",
+      "windowSeat": "Nein",
+      "tableType": "feststehend",
+      "accessibility": "rollstuhlgerecht",
+      "acoustics": "lärmgeschützt",
+      "workTop": "fest",
+      "chair": "standard"
     }
   },
   {
-    "PlatzId": "862c45f9g3d3c4f345678905",
-    "eigenschaften": {
-      "Tisch": "Tisch B2",
-      "Monitor": "27 Zoll",
-      "Fensterplatz": "Ja",
-      "TischArt": "Standard",
-      "Barrierefreiheit": "Rollstuhlgerecht",
-      "Akustik": "Keine Lärmisolierung",
-      "Arbeitsplatte": "Erweitert",
-      "Stuhl": "Standard"
+    "seatId": 5,
+    "properties": {
+      "table": "Tisch E1",
+      "monitor": "24 Zoll",
+      "windowSeat": "Ja",
+      "tableType": "höhenverstellbar",
+      "accessibility": "nicht rollstuhlgerecht",
+      "acoustics": "nicht lärmgeschützt",
+      "workTop": "erweiterbar",
+      "chair": "ergonomisch"
     }
   },
   {
-    "PlatzId": "862c45f9g3d3c4f345678906",
-    "eigenschaften": {
-      "Tisch": "Tisch B3",
-      "Monitor": "24 Zoll",
-      "Fensterplatz": "Nein",
-      "TischArt": "Höhenverstellbar",
-      "Barrierefreiheit": "Nicht Rollstuhlgerecht",
-      "Akustik": "Lärmisolierung vorhanden",
-      "Arbeitsplatte": "Erweitert",
-      "Stuhl": "Ergonomisch"
+    "seatId": 6,
+    "properties": {
+      "table": "Tisch F1",
+      "monitor": "27 Zoll",
+      "windowSeat": "Nein",
+      "tableType": "feststehend",
+      "accessibility": "rollstuhlgerecht",
+      "acoustics": "lärmgeschützt",
+      "workTop": "fest",
+      "chair": "standard"
     }
   },
   {
-    "PlatzId": "862c45f9g3d3c4f345678907",
-    "eigenschaften": {
-      "Tisch": "Tisch C1",
-      "Monitor": "27 Zoll",
-      "Fensterplatz": "Ja",
-      "TischArt": "Standard",
-      "Barrierefreiheit": "Rollstuhlgerecht",
-      "Akustik": "Keine Lärmisolierung",
-      "Arbeitsplatte": "Standard",
-      "Stuhl": "Standard"
+    "seatId": 7,
+    "properties": {
+      "table": "Tisch G1",
+      "monitor": "kein Monitor",
+      "windowSeat": "Ja",
+      "tableType": "höhenverstellbar",
+      "accessibility": "nicht rollstuhlgerecht",
+      "acoustics": "nicht lärmgeschützt",
+      "workTop": "erweiterbar",
+      "chair": "ergonomisch"
     }
   },
   {
-    "PlatzId": "862c45f9g3d3c4f345678908",
-    "eigenschaften": {
-      "Tisch": "Tisch C2",
-      "Monitor": "24 Zoll",
-      "Fensterplatz": "Nein",
-      "TischArt": "Höhenverstellbar",
-      "Barrierefreiheit": "Nicht Rollstuhlgerecht",
-      "Akustik": "Lärmisolierung vorhanden",
-      "Arbeitsplatte": "Erweitert",
-      "Stuhl": "Ergonomisch"
+    "seatId": 8,
+    "properties": {
+      "table": "Tisch H1",
+      "monitor": "32 Zoll",
+      "windowSeat": "Nein",
+      "tableType": "feststehend",
+      "accessibility": "rollstuhlgerecht",
+      "acoustics": "lärmgeschützt",
+      "workTop": "fest",
+      "chair": "standard"
     }
   },
   {
-    "PlatzId": "862c45f9g3d3c4f345678909",
-    "eigenschaften": {
-      "Tisch": "Tisch C3",
-      "Monitor": "32 Zoll",
-      "Fensterplatz": "Ja",
-      "TischArt": "Standard",
-      "Barrierefreiheit": "Rollstuhlgerecht",
-      "Akustik": "Keine Lärmisolierung",
-      "Arbeitsplatte": "Standard",
-      "Stuhl": "Ergonomisch"
+    "seatId": 9,
+    "properties": {
+      "table": "Tisch I1",
+      "monitor": "24 Zoll",
+      "windowSeat": "Ja",
+      "tableType": "höhenverstellbar",
+      "accessibility": "nicht rollstuhlgerecht",
+      "acoustics": "nicht lärmgeschützt",
+      "workTop": "erweiterbar",
+      "chair": "ergonomisch"
     }
   },
   {
-    "PlatzId": "862c45f9g3d3c4f345678910",
-    "eigenschaften": {
-      "Tisch": "Tisch D1",
-      "Monitor": "24 Zoll",
-      "Fensterplatz": "Nein",
-      "TischArt": "Höhenverstellbar",
-      "Barrierefreiheit": "Nicht Rollstuhlgerecht",
-      "Akustik": "Lärmisolierung vorhanden",
-      "Arbeitsplatte": "Erweitert",
-      "Stuhl": "Standard"
+    "seatId": 10,
+    "properties": {
+      "table": "Tisch J1",
+      "monitor": "27 Zoll",
+      "windowSeat": "Nein",
+      "tableType": "feststehend",
+      "accessibility": "rollstuhlgerecht",
+      "acoustics": "lärmgeschützt",
+      "workTop": "fest",
+      "chair": "standard"
+    }
+  },
+  {
+    "seatId": 11,
+    "properties": {
+      "table": "Tisch K1",
+      "monitor": "kein Monitor",
+      "windowSeat": "Ja",
+      "tableType": "höhenverstellbar",
+      "accessibility": "nicht rollstuhlgerecht",
+      "acoustics": "nicht lärmgeschützt",
+      "workTop": "erweiterbar",
+      "chair": "ergonomisch"
+    }
+  },
+  {
+    "seatId": 12,
+    "properties": {
+      "table": "Tisch L1",
+      "monitor": "32 Zoll",
+      "windowSeat": "Nein",
+      "tableType": "feststehend",
+      "accessibility": "rollstuhlgerecht",
+      "acoustics": "lärmgeschützt",
+      "workTop": "fest",
+      "chair": "standard"
+    }
+  },
+  {
+    "seatId": 13,
+    "properties": {
+      "table": "Tisch M1",
+      "monitor": "24 Zoll",
+      "windowSeat": "Ja",
+      "tableType": "höhenverstellbar",
+      "accessibility": "nicht rollstuhlgerecht",
+      "acoustics": "nicht lärmgeschützt",
+      "workTop": "erweiterbar",
+      "chair": "ergonomisch"
+    }
+  },
+  {
+    "seatId": 14,
+    "properties": {
+      "table": "Tisch N1",
+      "monitor": "27 Zoll",
+      "windowSeat": "Nein",
+      "tableType": "feststehend",
+      "accessibility": "rollstuhlgerecht",
+      "acoustics": "lärmgeschützt",
+      "workTop": "fest",
+      "chair": "standard"
+    }
+  },
+  {
+    "seatId": 15,
+    "properties": {
+      "table": "Tisch O1",
+      "monitor": "kein Monitor",
+      "windowSeat": "Ja",
+      "tableType": "höhenverstellbar",
+      "accessibility": "nicht rollstuhlgerecht",
+      "acoustics": "nicht lärmgeschützt",
+      "workTop": "erweiterbar",
+      "chair": "ergonomisch"
+    }
+  },
+  {
+    "seatId": 16,
+    "properties": {
+      "table": "Tisch P1",
+      "monitor": "32 Zoll",
+      "windowSeat": "Nein",
+      "tableType": "feststehend",
+      "accessibility": "rollstuhlgerecht",
+      "acoustics": "lärmgeschützt",
+      "workTop": "fest",
+      "chair": "standard"
+    }
+  },
+  {
+    "seatId": 17,
+    "properties": {
+      "table": "Tisch Q1",
+      "monitor": "24 Zoll",
+      "windowSeat": "Ja",
+      "tableType": "höhenverstellbar",
+      "accessibility": "nicht rollstuhlgerecht",
+      "acoustics": "nicht lärmgeschützt",
+      "workTop": "erweiterbar",
+      "chair": "ergonomisch"
+    }
+  },
+  {
+    "seatId": 18,
+    "properties": {
+      "table": "Tisch R1",
+      "monitor": "27 Zoll",
+      "windowSeat": "Nein",
+      "tableType": "feststehend",
+      "accessibility": "rollstuhlgerecht",
+      "acoustics": "lärmgeschützt",
+      "workTop": "fest",
+      "chair": "standard"
+    }
+  },
+  {
+    "seatId": 19,
+    "properties": {
+      "table": "Tisch S1",
+      "monitor": "kein Monitor",
+      "windowSeat": "Ja",
+      "tableType": "höhenverstellbar",
+      "accessibility": "nicht rollstuhlgerecht",
+      "acoustics": "nicht lärmgeschützt",
+      "workTop": "erweiterbar",
+      "chair": "ergonomisch"
+    }
+  },
+  {
+    "seatId": 20,
+    "properties": {
+      "table": "Tisch T1",
+      "monitor": "32 Zoll",
+      "windowSeat": "Nein",
+      "tableType": "feststehend",
+      "accessibility": "rollstuhlgerecht",
+      "acoustics": "lärmgeschützt",
+      "workTop": "fest",
+      "chair": "standard"
     }
   }
-
 ]

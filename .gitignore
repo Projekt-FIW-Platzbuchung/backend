@@ -168,6 +168,7 @@ public/
 
 # for Mac
 .DS_Storage
+.DS_Store
 
 # WebAssembly Toolkit cache directories
 .wasm-pack/

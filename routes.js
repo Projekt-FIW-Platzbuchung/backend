@@ -80,7 +80,36 @@ router.get("/bookingstatus", async (req, res) => {
   res.json(aggregation);
 });
 
+router.get("/bookings/user/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const userBookings = await bookings.find({ userId: userId });
+    res.json(userBookings);
+  }
+  catch (error) {
+    console.error("Error fetching user bookings:", error);
+  }
+} 
+);
 
+router.get("/bookingsWithUsers", async (req, res) => {
+  try {
+    const allBookings = await bookings.find();
+    const allUsers = await user.find();
+
+    const result = allBookings.map(booking => {
+      const bookingUser = allUsers.find(u => u.userId === booking.userId);
+      return {
+        ...booking.toObject(),
+        userName: bookingUser ? bookingUser.name : "Unbekannt"
+      };
+    });
+
+    res.json(result);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
 
 module.exports = router;
 
