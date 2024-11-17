@@ -3,10 +3,8 @@ const router = express.Router();
 const seat = require("./models/seat");
 const bookings = require("./models/bookings");
 const user = require("./models/user");
-const cors = require("cors");
-const { bookingInformationByDate } = require('./helpers_database_requests.js'); 
 
-router.use(cors());
+const { bookingInformationByDate } = require('./helpers_database_requests.js'); 
 
 // eine GET-Anfrage alle user
 router.get("/user", async (req, res) => {
@@ -94,24 +92,6 @@ router.get("/bookings/user/:userId", async (req, res) => {
 } 
 );
 
-router.get("/bookingsWithUsers", async (req, res) => {
-  try {
-    const allBookings = await bookings.find();
-    const allUsers = await user.find();
-
-    const result = allBookings.map(booking => {
-      const bookingUser = allUsers.find(u => u.userId === booking.userId);
-      return {
-        ...booking.toObject(),
-        userName: bookingUser ? bookingUser.name : "Unbekannt"
-      };
-    });
-
-    res.json(result);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-});
 
 module.exports = router;
 
