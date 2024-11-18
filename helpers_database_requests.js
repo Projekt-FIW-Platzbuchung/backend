@@ -4,7 +4,6 @@ const seat = require("./models/seat");
 const bookings = require("./models/bookings");
 const user = require("./models/user");
 
-
 // Funktion die seat mit bookings aggregiert/joined und "frei" oder "gebucht" als status hinzufügt
 async function bookingInformationByDate(date) {
   console.log(typeof date);
@@ -20,40 +19,43 @@ async function bookingInformationByDate(date) {
         },
       },
       {
-        $unwind: {
-          path: "$bookingDetails",
-          preserveNullAndEmptyArrays: true,
+        $addFields: {
+          bookingDetails: {
+            $filter: {
+              input: "$bookingDetails",
+              as: "booking",
+              cond: {
+                $eq: [{ $toDate: "$$booking.date" }, new Date(date)],
+              },
+            },
+          },
         },
       },
       {
         $addFields: {
-          "bookingDetails.dateAsDate": { $toDate: "$bookingDetails.date" },
-        
+          bookingDetails: {
+            $cond: [
+              { $eq: [{ $size: "$bookingDetails" }, 0] },
+              null,
+              { $arrayElemAt: ["$bookingDetails", 0] },
+            ],
+          },
         },
       },
       {
         $project: {
           seatId: 1,
           properties: 1,
-          'bookingDetails.seatId': 1,
-          'bookingDetails.date': 1,
-          'bookingDetails.userId': 1,
-         
+          "bookingDetails.userId": 1,
+          "bookingDetails.date": 1,
           status: {
-            $cond: [
-              {
-                $and: [
-                  { $ne: ["$bookingDetails", null] },
-                  { $eq: ["$bookingDetails.dateAsDate", new Date(date)] },
-                ],
-              },
-              "gebucht",
-              "frei",
-            ],
+            $cond: [{ $ne: ["$bookingDetails", null] }, "gebucht", "frei"],
           },
+          _id: 0,
         },
       },
     ]);
+
     console.log(JSON.stringify(results, null, 2));
 
     return results;
@@ -63,8 +65,6 @@ async function bookingInformationByDate(date) {
   }
 }
 
-
-
 module.exports = {
-  bookingInformationByDate
+  bookingInformationByDate,
 };

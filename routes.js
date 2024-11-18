@@ -76,7 +76,7 @@ router.get("/date", async (req, res) => {
 });
 
 router.get("/bookingstatus", async (req, res) => {
-  aggregation = await bookingInformationByDate("2023-10-01");
+  aggregation = await bookingInformationByDate("2023-10-19");
   res.json(aggregation);
 });
 
