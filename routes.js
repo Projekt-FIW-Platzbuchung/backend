@@ -6,17 +6,6 @@ const user = require("./models/user");
 
 const { bookingInformationByDate } = require("./helpers_database_requests.js");
 
-// eine GET-Anfrage alle user
-router.get("/user", async (req, res) => {
-  try {
-    const allUsers = await user.find();
-    console.log(allUsers);
-    res.json(allUsers);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-});
-
 // eine GET-Anfrage alle buchungen
 router.get("/bookings", async (req, res) => {
   try {
