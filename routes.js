@@ -6,25 +6,6 @@ const user = require("./models/user");
 
 const { bookingInformationByDate } = require("./helpers_database_requests.js");
 
-// eine GET-Anfrage alle buchungen
-router.get("/bookings", async (req, res) => {
-  try {
-    const allBookings = await bookings.find();
-
-    // Datum formatieren
-    const formattedBookings = allBookings.map((booking) => {
-      return {
-        ...booking._doc,
-        date: booking.date.toISOString().split("T")[0], // entfernt Uhrzeit und Zeitzone
-      };
-    });
-    console.log(formattedBookings);
-    res.json(formattedBookings);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-});
-
 // eine GET-Anfrage alle seats
 router.get("/seat", async (req, res) => {
   try {
