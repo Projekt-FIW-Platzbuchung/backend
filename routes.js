@@ -80,4 +80,18 @@ router.get("/bookings/user/:userId", async (req, res) => {
 });
 
 
+router.get("/seat/:seatId", async (req, res) => {
+  try {
+    console.log(`Fetching seat details for seatId: ${req.params.seatId}`); // Debugging
+    const seatDetails = await seat.findOne({ seatId: parseInt(req.params.seatId) }); // seatId als Zahl verwenden
+    if (!seatDetails) {
+      return res.status(404).send("Seat not found");
+    }
+    res.json(seatDetails);
+  } catch (error) {
+    console.error("Error fetching seat details:", error);
+    res.status(500).send(error.message);
+  }
+});
+
 module.exports = router;
