@@ -20,7 +20,7 @@ router.get("/seat", async (req, res) => {
 //POST-Anfrage für ein neues booking
 router.post("/booking", async (req, res) => {
   const bookingsData = {
-    bookingsId: req.body.bookingsId,
+   // bookingsId: req.body.bookingsId,
     userId: req.body.userId,
     seatId: req.body.seatId,
     date: req.body.date,

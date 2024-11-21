@@ -4,7 +4,7 @@ const app = require('../server'); // Import app from server.js
 const Bookings = require('../models/bookings');
 
 describe('POST /booking', () => {
-    let createdBookingId;
+    //let createdBookingId;
 
     // Ensure the Mongoose connection closes after all tests
     afterAll(async () => {
@@ -13,7 +13,7 @@ describe('POST /booking', () => {
 
     it('should create a new booking and return the saved data', async () => {
         const newBooking = {
-            bookingsId: 123,
+            // bookingsId: 123,
             userId: 1,
             seatId: 1,
             date: new Date(),
@@ -35,7 +35,7 @@ describe('POST /booking', () => {
         jest.spyOn(Bookings.prototype, 'save').mockRejectedValueOnce(new Error('Database error'));
 
         const newBooking = {
-            bookingsId: 123,
+            //bookingsId: 123,
             userId: 1,
             seatId: 1,
             date: new Date(),
@@ -52,10 +52,10 @@ describe('POST /booking', () => {
     }, 15000);
 
     // Cleanup step: Delete the created booking after the tests
-    afterEach(async () => {
+    /* afterEach(async () => {
         if (createdBookingId) {
             await Bookings.findByIdAndDelete(createdBookingId);
             createdBookingId = null; // Reset for the next test
         }
-    });
+    }); */
 });
