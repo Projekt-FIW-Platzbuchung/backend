@@ -4,7 +4,12 @@ const seat = require("./models/seat");
 const bookings = require("./models/bookings");
 const user = require("./models/user");
 
-// Funktion die seat mit bookings und bookingDetails mit user aggregiert und "frei" oder "gebucht" als status hinzufügt
+/**
+ * Aggregates seat with booking collection as bookingDetails and bookingDetails with user-collection, adds status "frei" or "gebucht" to each seat for a date
+ * @param {Date} date - date to check booking status
+ * @return {Array} - results of aggregation: seats with properties, status and bookingDetails
+ */
+
 async function bookingInformationByDate(date) {
   try {
     const results = await seat.aggregate([
@@ -76,7 +81,8 @@ async function bookingInformationByDate(date) {
       },
     ]);
 
-    console.log(JSON.stringify(results, null, 2));
+    // console.log(JSON.stringify(results, null, 2));
+    
     return results;
   } catch (error) {
     console.error("Error during aggregation:", error);
