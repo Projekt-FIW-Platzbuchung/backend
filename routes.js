@@ -173,6 +173,7 @@ router.get("/date", async (req, res) => {
  *     parameters:
  *       - in: query
  *         name: date
+ *         required: true
  *         schema:
  *           type: string
  *           format: date
