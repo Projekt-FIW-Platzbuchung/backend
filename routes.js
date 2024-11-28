@@ -6,6 +6,46 @@ const user = require("./models/user");
 
 const { bookingInformationByDate } = require("./helpers_database_requests.js");
 
+/**
+ * @swagger
+ * /seat:
+ *   get:
+ *     summary: Retrieve all seats
+ *     description: Fetches all seat records from the database.
+ *     responses:
+ *       200:
+ *         description: A list of seats.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   seatId:
+ *                     type: integer
+ *                   properties:
+ *                     type: object
+ *                     properties:
+ *                       Table:
+ *                         type: string
+ *                       Monitor:
+ *                         type: string
+ *                       WindowSeat:
+ *                         type: string
+ *                       TableType:
+ *                         type: string
+ *                       Accessibility:
+ *                         type: string
+ *                       Acoustics:
+ *                         type: string
+ *                       WorkTop:
+ *                         type: string
+ *                       Chair:
+ *                         type: string
+ *       500:
+ *         description: Internal server error.
+ */
 // eine GET-Anfrage alle seats
 router.get("/seat", async (req, res) => {
   try {
@@ -17,6 +57,47 @@ router.get("/seat", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /booking:
+ *   post:
+ *     summary: Create a new booking
+ *     description: Adds a new booking to the database.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: integer
+ *                 description: ID of the user making the booking.
+ *               seatId:
+ *                 type: integer
+ *                 description: ID of the seat being booked.
+ *               date:
+ *                 type: string
+ *                 format: date
+ *                 description: Date of the booking.
+ *     responses:
+ *       201:
+ *         description: Booking created successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 userId:
+ *                   type: integer
+ *                 seatId:
+ *                   type: integer
+ *                 date:
+ *                   type: string
+ *                   format: date
+ *       500:
+ *         description: Error saving the booking.
+ */
 //POST-Anfrage für ein neues booking
 router.post("/booking", async (req, res) => {
   const bookingsData = {
