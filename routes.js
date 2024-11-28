@@ -101,7 +101,6 @@ router.get("/seat", async (req, res) => {
 //POST-Anfrage für ein neues booking
 router.post("/booking", async (req, res) => {
   const bookingsData = {
-   // bookingsId: req.body.bookingsId,
     userId: req.body.userId,
     seatId: req.body.seatId,
     date: req.body.date,
@@ -117,6 +116,40 @@ router.post("/booking", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /date:
+ *   get:
+ *     summary: Retrieve bookings for a specific date
+ *     description: Fetches all bookings for a specified date.
+ *     parameters:
+ *       - in: query
+ *         name: date
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: The date to filter bookings (format: YYYY-MM-DD).
+ *     responses:
+ *       200:
+ *         description: A list of bookings for the specified date.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   userId:
+ *                     type: integer
+ *                   seatId:
+ *                     type: integer
+ *                   date:
+ *                     type: string
+ *                     format: date
+ *       500:
+ *         description: Internal server error.
+ */
 // GET-anfrage für alle bookings an einem datum
 router.get("/date", async (req, res) => {
   try {
@@ -131,6 +164,25 @@ router.get("/date", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /bookingstatus:
+ *   get:
+ *     summary: Retrieve booking status for all seats on a specific date
+ *     description: Fetches the booking status of all seats on a given date.
+ *     parameters:
+ *       - in: query
+ *         name: date
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: Date to check booking status.
+ *     responses:
+ *       200:
+ *         description: Booking status details.
+ *       500:
+ *         description: Internal server error.
+ */
 // GET-Anfrage für den Buchungsstatus aller Plätze an einem Datum
 router.get("/bookingstatus", async (req, res) => {
   aggregation = await bookingInformationByDate("2023-10-19");
