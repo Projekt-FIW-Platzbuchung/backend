@@ -13,6 +13,7 @@ git clone https://github.com/Projekt-FIW-Platzbuchung/backend.git
 ```
 cd path to the <project_name>
 npm install
+npm install moment
 npm install --save-dev jest
 npm install --save-dev supertest
 ```
