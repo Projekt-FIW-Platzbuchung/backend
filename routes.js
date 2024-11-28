@@ -3,6 +3,7 @@ const router = express.Router();
 const seat = require("./models/seat");
 const bookings = require("./models/bookings");
 const user = require("./models/user");
+const moment = require("moment");
 
 const { bookingInformationByDate } = require("./helpers_database_requests.js");
 
@@ -62,7 +63,7 @@ router.get("/seat", async (req, res) => {
  * /booking:
  *   post:
  *     summary: Create a new booking
- *     description: Adds a new booking to the database.
+ *     description: Adds a new booking to the database with a specific user, seat, and formatted date.
  *     requestBody:
  *       required: true
  *       content:
@@ -73,13 +74,20 @@ router.get("/seat", async (req, res) => {
  *               userId:
  *                 type: integer
  *                 description: ID of the user making the booking.
+ *                 example: 1
+ *               username:
+ *                 type: string
+ *                 description: Name of the user making the booking.
+ *                 example: "John Doe"
  *               seatId:
  *                 type: integer
  *                 description: ID of the seat being booked.
+ *                 example: 5
  *               date:
  *                 type: string
  *                 format: date
- *                 description: Date of the booking.
+ *                 description: Date of the booking in DD-MM-YYYY format.
+ *                 example: "28-11-2024"
  *     responses:
  *       201:
  *         description: Booking created successfully.
@@ -90,20 +98,28 @@ router.get("/seat", async (req, res) => {
  *               properties:
  *                 userId:
  *                   type: integer
+ *                   description: ID of the user.
+ *                 username:
+ *                   type: string
+ *                   description: Name of the user.
  *                 seatId:
  *                   type: integer
+ *                   description: ID of the seat.
  *                 date:
  *                   type: string
  *                   format: date
+ *                   description: Booking date in DD-MM-YYYY format.
  *       500:
  *         description: Error saving the booking.
  */
 //POST-Anfrage für ein neues booking
 router.post("/booking", async (req, res) => {
+  const formattedDate = moment(req.body.date).format("DD-MM-YYYY");
   const bookingsData = {
     userId: req.body.userId,
+    username: req.body.username,
     seatId: req.body.seatId,
-    date: req.body.date,
+    date: formattedDate,
   };
 
   try {
@@ -113,54 +129,6 @@ router.post("/booking", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send("Fehler beim Speichern der Buchung");
-  }
-});
-
-/**
- * @swagger
- * /date:
- *   get:
- *     summary: Retrieve bookings for a specific date
- *     description: Fetches all bookings for a specified date.
- *     parameters:
- *       - in: query
- *         name: date
- *         required: true
- *         schema:
- *           type: string
- *           format: date
- *         description: The date to filter bookings (format: YYYY-MM-DD).
- *     responses:
- *       200:
- *         description: A list of bookings for the specified date.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   userId:
- *                     type: integer
- *                   seatId:
- *                     type: integer
- *                   date:
- *                     type: string
- *                     format: date
- *       500:
- *         description: Internal server error.
- */
-// GET-anfrage für alle bookings an einem datum
-router.get("/date", async (req, res) => {
-  try {
-    const oneDate = await bookings.find({
-      date: "2023-10-10",
-    });
-
-    res.json(oneDate);
-  } catch (error) {
-    console.error("Error fetching date:", error);
-    res.status(500).send(error.message);
   }
 });
 
@@ -202,7 +170,7 @@ router.get("/date", async (req, res) => {
  */
 // GET-Anfrage für den Buchungsstatus aller Plätze an einem Datum
 router.get("/bookingstatus", async (req, res) => {
-  aggregation = await bookingInformationByDate("2023-10-19");
+  aggregation = await bookingInformationByDate("gii");
   res.json(aggregation);
 });
 

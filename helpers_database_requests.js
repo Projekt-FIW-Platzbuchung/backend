@@ -9,8 +9,9 @@ const user = require("./models/user");
  * @param {Date} date - date to check booking status
  * @return {Array} - results of aggregation: seats with properties, status and bookingDetails
  */
-
 async function bookingInformationByDate(date) {
+  console.log(typeof date);
+
   try {
     const results = await seat.aggregate([
       {
@@ -35,33 +36,12 @@ async function bookingInformationByDate(date) {
         },
       },
       {
-        $lookup: {
-          from: "user",
-          let: { user_id: { $arrayElemAt: ["$bookingDetails.userId", 0] } },
-          pipeline: [{ $match: { $expr: { $eq: ["$userId", "$$user_id"] } } }],
-          as: "userDetails",
-        },
-      },
-      {
         $addFields: {
           bookingDetails: {
             $cond: [
               { $eq: [{ $size: "$bookingDetails" }, 0] },
               null,
-              {
-                $mergeObjects: [
-                  { $arrayElemAt: ["$bookingDetails", 0] },
-                  {
-                    username: {
-                      $cond: [
-                        { $gt: [{ $size: "$userDetails" }, 0] },
-                        { $arrayElemAt: ["$userDetails.name", 0] },
-                        null,
-                      ],
-                    },
-                  },
-                ],
-              },
+              { $arrayElemAt: ["$bookingDetails", 0] },
             ],
           },
         },
@@ -81,8 +61,8 @@ async function bookingInformationByDate(date) {
       },
     ]);
 
-    // console.log(JSON.stringify(results, null, 2));
-    
+    console.log(JSON.stringify(results, null, 2));
+
     return results;
   } catch (error) {
     console.error("Error during aggregation:", error);
