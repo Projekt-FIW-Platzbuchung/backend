@@ -169,17 +169,33 @@ router.get("/date", async (req, res) => {
  * /bookingstatus:
  *   get:
  *     summary: Retrieve booking status for all seats on a specific date
- *     description: Fetches the booking status of all seats on a given date.
+ *     description: Returns the booking status of all seats for a given date.
  *     parameters:
  *       - in: query
  *         name: date
  *         schema:
  *           type: string
  *           format: date
- *         description: Date to check booking status.
+ *         description: The date to check booking status (format: YYYY-MM-DD).
  *     responses:
  *       200:
- *         description: Booking status details.
+ *         description: Booking status details for the specified date.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   seatId:
+ *                     type: integer
+ *                   status:
+ *                     type: string
+ *                   userId:
+ *                     type: integer
+ *                   date:
+ *                     type: string
+ *                     format: date
  *       500:
  *         description: Internal server error.
  */
@@ -189,6 +205,33 @@ router.get("/bookingstatus", async (req, res) => {
   res.json(aggregation);
 });
 
+/**
+ * @swagger
+ * /bookings/{id}:
+ *   delete:
+ *     summary: Delete a booking by ID
+ *     description: Deletes a booking from the database using its unique ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The unique ID of the booking to delete.
+ *     responses:
+ *       204:
+ *         description: Booking deleted successfully.
+ *       404:
+ *         description: Booking not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Buchung nicht gefunden
+ */
 // DELETE-Anfrage für eine Buchung
 router.delete("/bookings/:id", async (req, res) => {
   try {
@@ -200,6 +243,39 @@ router.delete("/bookings/:id", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /bookings/user/{userId}:
+ *   get:
+ *     summary: Retrieve bookings for a specific user
+ *     description: Fetches all bookings made by a specific user.
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the user.
+ *     responses:
+ *       200:
+ *         description: A list of user bookings.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   userId:
+ *                     type: integer
+ *                   seatId:
+ *                     type: integer
+ *                   date:
+ *                     type: string
+ *                     format: date
+ *       500:
+ *         description: Internal server error.
+ */
 //GET-Anfrage Bookings für bestimmten User
 router.get("/bookings/user/:userId", async (req, res) => {
   try {
@@ -212,7 +288,53 @@ router.get("/bookings/user/:userId", async (req, res) => {
   }
 });
 
-
+/**
+ * @swagger
+ * /seat/{seatId}:
+ *   get:
+ *     summary: Retrieve details of a specific seat
+ *     description: Fetches seat details by seat ID.
+ *     parameters:
+ *       - in: path
+ *         name: seatId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the seat to fetch details for.
+ *     responses:
+ *       200:
+ *         description: Seat details.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 seatId:
+ *                   type: integer
+ *                 properties:
+ *                   type: object
+ *                   properties:
+ *                     Table:
+ *                       type: string
+ *                     Monitor:
+ *                       type: string
+ *                     WindowSeat:
+ *                       type: string
+ *                     TableType:
+ *                       type: string
+ *                     Accessibility:
+ *                       type: string
+ *                     Acoustics:
+ *                       type: string
+ *                     WorkTop:
+ *                       type: string
+ *                     Chair:
+ *                       type: string
+ *       404:
+ *         description: Seat not found.
+ *       500:
+ *         description: Internal server error.
+ */
 router.get("/seat/:seatId", async (req, res) => {
   try {
     console.log(`Fetching seat details for seatId: ${req.params.seatId}`); // Debugging
