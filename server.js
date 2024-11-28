@@ -2,11 +2,17 @@ require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const setupSwaggerDocs = require('./swagger');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
 const routes = require('./routes');
 const mongoose = require('mongoose');
 
 const app = express();
 const PORT = process.env.PORT
+
+// Setup Swagger
+const swaggerDocs = swaggerJsdoc(setupSwaggerDocs); // Generate swagger docs using your setup
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs)); // Serve Swagger UI at /api-docs
 
 app.use(express.json());
 app.use(cors());
@@ -24,6 +30,7 @@ if (process.env.NODE_ENV !== 'test') {
             console.error('Serverstart fehlgeschlagen:', error);
         } else {
             console.log(`Server läuft auf ${PORT}`);
+            console.log(`Swagger UI available at http://localhost:${PORT}/api-docs`); 
         }
     });
 }
