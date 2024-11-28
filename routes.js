@@ -3,6 +3,7 @@ const router = express.Router();
 const seat = require("./models/seat");
 const bookings = require("./models/bookings");
 const user = require("./models/user");
+const moment = require("moment");
 
 const { bookingInformationByDate } = require("./helpers_database_requests.js");
 
@@ -19,11 +20,12 @@ router.get("/seat", async (req, res) => {
 
 //POST-Anfrage für ein neues booking
 router.post("/booking", async (req, res) => {
+  const formattedDate = moment(req.body.date).format("DD-MM-YYYY");
   const bookingsData = {
     userId: req.body.userId,
     username: req.body.username,
     seatId: req.body.seatId,
-    date: req.body.date,
+    date: formattedDate,
   };
 
   try {
