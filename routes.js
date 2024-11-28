@@ -52,9 +52,27 @@ router.get("/date", async (req, res) => {
 
 // GET-Anfrage für den Buchungsstatus aller Plätze an einem Datum
 router.get("/bookingstatus", async (req, res) => {
-  aggregation = await bookingInformationByDate("2023-10-19");
-  res.json(aggregation);
-});
+  try {
+    // Holt das Datum aus den Abfrageparametern
+    let date = req.query.date;
+
+    // Verwendet das heutige Datum als Standarddatum, wenn kein Datum bereitgestellt wurde
+    if (!date) {
+      const today = new Date();
+      date = today.toISOString().split('T')[0]; // Wandelt das Datum in 'YYYY-MM-DD' Format um
+    }
+
+    // Aufruf der Funktion mit dem dynamisch gesetzten Datum
+    const aggregation = await bookingInformationByDate(date);
+
+    // Sendet die aggregierten Daten als JSON zurück
+    res.json(aggregation);
+  }
+  catch (error) {
+    console.error("Fehler beim Aufrufen des Buchungsstatus:", error);
+    res.status(500).json({ error: "Ein interner Fehler ist aufgetreten."});
+  }
+});  
 
 // DELETE-Anfrage für eine Buchung
 router.delete("/bookings/:id", async (req, res) => {
