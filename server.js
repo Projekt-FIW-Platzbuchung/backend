@@ -1,6 +1,7 @@
 require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
+const setupSwaggerDocs = require('./swagger');
 const routes = require('./routes');
 const mongoose = require('mongoose');
 
