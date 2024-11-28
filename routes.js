@@ -23,6 +23,7 @@ router.post("/booking", async (req, res) => {
   const formattedDate = moment(req.body.date).format("DD-MM-YYYY");
   const bookingsData = {
     userId: req.body.userId,
+    username: req.body.username,
     seatId: req.body.seatId,
     date: formattedDate,
   };
