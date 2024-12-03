@@ -54,8 +54,14 @@ router.get("/date", async (req, res) => {
 
 // GET-Anfrage für den Buchungsstatus aller Plätze an einem Datum
 router.get("/bookingstatus", async (req, res) => {
-  aggregation = await bookingInformationByDate("2023-10-19");
+  const { date } = req.query;
+  if (date) {
+  aggregation = await bookingInformationByDate(date);
   res.json(aggregation);
+  }
+  else {
+    res.status(400).send("Bitte Datum angeben");
+  }
 });
 
 // DELETE-Anfrage für eine Buchung
