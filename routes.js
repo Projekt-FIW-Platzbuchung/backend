@@ -7,21 +7,58 @@ const moment = require("moment");
 const { bookingInformationByDate } = require("./helpers_database_requests.js");
 const { verifyToken } = require('./middleware/authMiddleware');
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 
 // Load environment variables
 require('dotenv').config(); 
-//Test endpoint to generate token
-router.post('/generate-token', (req, res) => {
+
+// Middleware to verify Azure Entra ID token
+async function verifyAzureToken(req, res, next) {
+  const token = req.headers['authorization']?.split(' ')[1];  // Extract Bearer token from header
+
+  if (!token) {
+    return res.status(403).send('Token is required');
+  }
+
+  try {
+    // Verify the token with Azure's public keys (you can use MSAL or manually verify)
+    const response = await axios.get(`https://login.microsoftonline.com/common/discovery/keys`);
+    const keys = response.data.keys;
+
+    const decodedToken = jwt.decode(token, { complete: true });
+    if (!decodedToken) {
+      return res.status(401).send('Invalid token');
+    }
+
+    // Use the key from Azure to verify the JWT token
+    const key = keys.find(k => k.kid === decodedToken.header.kid);
+    if (!key) {
+      return res.status(401).send('Invalid token');
+    }
+
+    const verifiedToken = jwt.verify(token, key.x5c[0], { algorithms: ['RS256'] });
+
+    // Attach the decoded user info to the request
+    req.user = verifiedToken;
+    next();
+  } catch (error) {
+    console.error('Error verifying Azure token:', error);
+    res.status(401).send('Unauthorized');
+  }
+}
+
+// Test endpoint to generate token (with Azure Entra ID token)
+router.post('/generate-token', verifyAzureToken, (req, res) => {
   const user = { 
-    userId: Number(req.body.userId),  // Ensure userId is a number
-    name: req.body.name 
+    userId: req.user.sub, // The user ID from the Azure token (sub claim)
+    name: req.user.name || req.user.preferred_username // Name or username from the token
   };
 
   if (!user.userId || !user.name) {
     return res.status(400).send('UserId and name are required.');
   }
 
-  // Generate the JWT token
+  // Generate the custom JWT token with the user data from Azure token
   const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '1h' });
   res.json({ token });
 });
