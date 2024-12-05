@@ -4,9 +4,29 @@ const seat = require("./models/seat");
 const bookings = require("./models/bookings");
 const user = require("./models/user");
 const moment = require("moment");
-const { verifyToken } = require('./middleware/authMiddleware');
-
 const { bookingInformationByDate } = require("./helpers_database_requests.js");
+const { verifyToken } = require('./middleware/authMiddleware');
+const jwt = require('jsonwebtoken');
+
+// Load environment variables
+require('dotenv').config(); 
+//Test endpoint to generate token
+router.post('/generate-token', (req, res) => {
+  const user = { 
+    userId: Number(req.body.userId),  // Ensure userId is a number
+    name: req.body.name 
+  };
+
+  if (!user.userId || !user.name) {
+    return res.status(400).send('UserId and name are required.');
+  }
+
+  // Generate the JWT token
+  const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '1h' });
+  res.json({ token });
+});
+
+
 
 // eine GET-Anfrage alle seats
 router.get("/seat", async (req, res) => {
@@ -100,7 +120,7 @@ router.get("/bookings/user/:userId", verifyToken, async (req, res) => {
   }
 });
 
-
+//GET-Anfrage  für Seat Details
 router.get("/seat/:seatId", async (req, res) => {
   try {
     console.log(`Fetching seat details for seatId: ${req.params.seatId}`); // Debugging
