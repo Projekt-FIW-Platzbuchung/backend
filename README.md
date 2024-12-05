@@ -15,6 +15,7 @@ cd path to the <project_name>
 npm install
 npm install moment
 npm install jsonwebtoken
+npm install axios
 npm install --save-dev jest
 npm install --save-dev supertest
 ```
