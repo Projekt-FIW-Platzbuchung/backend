@@ -19,7 +19,7 @@ router.get("/seat", async (req, res) => {
   }
 });
 
-//POST-Anfrage für ein neues booking
+//POST-Anfrage für ein neues booking #PROTECTED
 router.post("/booking", verifyToken, async (req, res) => {
   const formattedDate = moment(req.body.date).format("DD-MM-YYYY");
   const bookingsData = {
@@ -77,8 +77,8 @@ router.get("/bookingstatus", async (req, res) => {
   }
 });  
 
-// DELETE-Anfrage für eine Buchung
-router.delete("/bookings/:id", async (req, res) => {
+// DELETE-Anfrage für eine Buchung #PROTECTED
+router.delete("/bookings/:id", verifyToken, async (req, res) => {
   try {
     await bookings.deleteOne({ _id: req.params.id });
     res.status(204).send();
@@ -88,8 +88,8 @@ router.delete("/bookings/:id", async (req, res) => {
   }
 });
 
-//GET-Anfrage Bookings für bestimmten User
-router.get("/bookings/user/:userId", async (req, res) => {
+//GET-Anfrage Bookings für bestimmten User #PROTECTED
+router.get("/bookings/user/:userId", verifyToken, async (req, res) => {
   try {
     const userId = req.params.userId;
     const userBookings = await bookings.find({ userId: userId });
