@@ -80,7 +80,7 @@ router.get("/seat", async (req, res) => {
 router.post("/booking", verifyToken, async (req, res) => {
   const formattedDate = moment(req.body.date).format("DD-MM-YYYY");
   const bookingsData = {
-    userId: req.body.userId,
+    userId: req.user.userId,
     username: req.body.username,
     seatId: req.body.seatId,
     date: formattedDate,
