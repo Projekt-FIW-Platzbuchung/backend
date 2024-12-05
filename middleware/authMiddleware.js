@@ -13,6 +13,7 @@ function verifyToken(req, res, next) {
       return res.status(401).send('Unauthorized');
     }
     req.user = decoded;  // Attach decoded user info to request
+    console.log('Token is valid, user:', req.user); // Log user information
     next();
   });
 }
