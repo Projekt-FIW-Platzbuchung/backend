@@ -3,6 +3,7 @@ const cors = require('cors');
 const express = require('express');
 const routes = require('./routes');
 const mongoose = require('mongoose');
+require('./tasks/cronjob_delete_old_bookings');
 
 const app = express();
 const PORT = process.env.PORT
