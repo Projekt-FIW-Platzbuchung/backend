@@ -12,8 +12,10 @@ router.get("/bookings", async (req, res) => {
 });
 
 /**
- * Function to delete bookings older than today's date
- */
+
+    Deletes bookings older than todays date from the database (format: "YYYY-MM-DD")
+
+*/
 async function deleteOldBookings() {
   try {
     const today = new Date().toISOString().split("T")[0]; // reformat date
