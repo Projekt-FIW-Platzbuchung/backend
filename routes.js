@@ -20,7 +20,7 @@ router.get("/seat", async (req, res) => {
 
 //POST-Anfrage für ein neues booking
 router.post("/booking", async (req, res) => {
-  const formattedDate = moment(req.body.date).format("DD-MM-YYYY");
+  const formattedDate = moment(req.body.date).format("YYYY-MM-DD");
   const bookingsData = {
     userId: req.body.userId,
     username: req.body.username,

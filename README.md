@@ -16,6 +16,7 @@ npm install
 npm install moment
 npm install --save-dev jest
 npm install --save-dev supertest
+npm install node-cron
 ```
 - Build and run the project
 ```
