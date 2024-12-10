@@ -2,6 +2,7 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../server'); // Import app from server.js
 const Bookings = require('../models/bookings');
+const user = require('../models/user');
 
 describe('POST /booking', () => {
     //let createdBookingId;
@@ -15,6 +16,7 @@ describe('POST /booking', () => {
         const newBooking = {
             // bookingsId: 123,
             userId: 1,
+            username: "Sabrina",
             seatId: 1,
             date: new Date(),
         };
@@ -37,6 +39,7 @@ describe('POST /booking', () => {
         const newBooking = {
             //bookingsId: 123,
             userId: 1,
+            username: "Sabrina",
             seatId: 1,
             date: new Date(),
         };
