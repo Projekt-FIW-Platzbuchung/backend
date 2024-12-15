@@ -4,4 +4,8 @@ async function deleteOneSeat(seatId) {
     return seat.deleteOne({seatId: seatId});    
 }
 
-module.exports = { deleteOneSeat };
+async function findSeat(seatId) {
+    return seat.findOne({ seatId: seatId }); 
+}
+
+module.exports = { deleteOneSeat, findSeat };

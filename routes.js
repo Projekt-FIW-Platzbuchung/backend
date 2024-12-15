@@ -101,11 +101,11 @@ router.get("/bookings/user/:userId", async (req, res) => {
   }
 });
 
-
 router.get("/seat/:seatId", async (req, res) => {
   try {
+    const seatId = parseInt(req.params.seatId, 10); // Konvertiert seatId zu einer Zahl
     console.log(`Fetching seat details for seatId: ${req.params.seatId}`); // Debugging
-    const seatDetails = await seat.findOne({ seatId: parseInt(req.params.seatId) }); // seatId als Zahl verwenden
+    const seatDetails = await seat.findOne({ seatId: seatId }); 
     if (!seatDetails) {
       return res.status(404).send("Seat not found");
     }
@@ -116,14 +116,10 @@ router.get("/seat/:seatId", async (req, res) => {
   }
 });
 
+// DELETE-Anfrage für einen nicht mehr benötigten Platz
 router.delete('/seat/:seatId', async (req, res) => {
   try {
-    const seatId = req.params.seatId;
-    
-    if (!seatId) {
-      return res.status(400).json({ message: 'Invalid seat ID' });
-    }
-
+    const seatId = parseInt(req.params.seatId, 10); // Konvertiert seatId zu einer Zahl
     console.log(`Attempting to delete seat with ID: ${seatId}`);
     const result = await seatService.deleteOneSeat(seatId);
 
@@ -141,8 +137,18 @@ router.delete('/seat/:seatId', async (req, res) => {
 // POST-Anfrage für einen neuen Platz
 router.post('/seat', async (req, res) => {
   console.log('Request body:', req.body); 
+  // Suche nach dem aktuell höchsten seatId-Wert
+  const lastSeat = await seat.findOne().sort('-seatId').exec();
+  // Berechnet newSeatId basierend auf der höchsten vorhandenen seatId
+  const newSeatId = lastSeat ? lastSeat.seatId + 1 : 1; // Fängt mit 1 an, wenn es keine Einträge gibt
+
+  if (!newSeatId) {
+    console.error("Fehler: Keine neue seatId generierbar");
+    return res.status(500).send("Fehler beim Generieren einer neuen seatId");
+  }
+
   const seatData = {
-    seatId: req.body.seatId,
+    seatId: newSeatId, 
     properties: {
       Table: req.body.Table,
       Monitor: req.body.Monitor,
@@ -154,7 +160,7 @@ router.post('/seat', async (req, res) => {
       Chair: req.body.Chair
     }
   };
-  
+
   try {
     const newSeat = new seat(seatData);
     const savedSeat = await newSeat.save();
