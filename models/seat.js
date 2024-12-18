@@ -1,8 +1,7 @@
-
 const mongoose = require('mongoose');
 
 const seatScheme = new mongoose.Schema({
-    seatId: { type: Number, required: true }, // Platz-ID als Zahl
+    seatId: { type: Number, required: true, unique: true }, // Platz-ID als Zahl
     properties: {
         Table: { type: String, required: false }, // Tisch als String
         Monitor: { type: String, required: false }, // Monitor als String
@@ -17,6 +16,5 @@ const seatScheme = new mongoose.Schema({
         //notizenfeld
     }
 });
-
 
 module.exports = mongoose.model('seat', seatScheme, 'seat');

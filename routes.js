@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const seat = require("./models/seat");
+const seatService = require("./services/seatService.js")
 const bookings = require("./models/bookings");
 const user = require("./models/user");
 const moment = require("moment");
+const mongoose = require('mongoose');
 
 const { bookingInformationByDate } = require("./helpers_database_requests.js");
 
@@ -99,11 +101,11 @@ router.get("/bookings/user/:userId", async (req, res) => {
   }
 });
 
-
 router.get("/seat/:seatId", async (req, res) => {
   try {
+    const seatId = parseInt(req.params.seatId, 10); // Konvertiert seatId zu einer Zahl
     console.log(`Fetching seat details for seatId: ${req.params.seatId}`); // Debugging
-    const seatDetails = await seat.findOne({ seatId: parseInt(req.params.seatId) }); // seatId als Zahl verwenden
+    const seatDetails = await seat.findOne({ seatId: seatId }); 
     if (!seatDetails) {
       return res.status(404).send("Seat not found");
     }
@@ -111,6 +113,61 @@ router.get("/seat/:seatId", async (req, res) => {
   } catch (error) {
     console.error("Error fetching seat details:", error);
     res.status(500).send(error.message);
+  }
+});
+
+// DELETE-Anfrage für einen nicht mehr benötigten Platz
+router.delete('/seat/:seatId', async (req, res) => {
+  try {
+    const seatId = parseInt(req.params.seatId, 10); // Konvertiert seatId zu einer Zahl
+    console.log(`Attempting to delete seat with ID: ${seatId}`);
+    const result = await seatService.deleteOneSeat(seatId);
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'Seat not found' });
+    }
+      console.log(`Successfully deleted seat with ID: ${req.params.seatId}`);
+      res.status(200).json({ message: 'Seat successfully deleted', seatId: req.params.seatId });
+    } catch (err) {
+    console.error(`Error deleting seat: ${err.message}`);
+    res.status(500).json({ error: 'Internal Server Error', details: err.message });
+  }
+});
+
+// POST-Anfrage für einen neuen Platz
+router.post('/seat', async (req, res) => {
+  console.log('Request body:', req.body); 
+  // Suche nach dem aktuell höchsten seatId-Wert
+  const lastSeat = await seat.findOne().sort('-seatId').exec();
+  // Berechnet newSeatId basierend auf der höchsten vorhandenen seatId
+  const newSeatId = lastSeat ? lastSeat.seatId + 1 : 1; // Fängt mit 1 an, wenn es keine Einträge gibt
+
+  if (!newSeatId) {
+    console.error("Fehler: Keine neue seatId generierbar");
+    return res.status(500).send("Fehler beim Generieren einer neuen seatId");
+  }
+
+  const seatData = {
+    seatId: newSeatId, 
+    properties: {
+      Table: req.body.Table,
+      Monitor: req.body.Monitor,
+      WindowSeat: req.body.WindowSeat,
+      TableType: req.body.TableType,
+      Accessibility: req.body.Accessibility,
+      Acoustics: req.body.Acoustics,
+      WorkTop: req.body.WorkTop,
+      Chair: req.body.Chair
+    }
+  };
+
+  try {
+    const newSeat = new seat(seatData);
+    const savedSeat = await newSeat.save();
+    res.status(201).send(savedSeat);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Fehler beim Speichern des neuen Platzes");
   }
 });
 
