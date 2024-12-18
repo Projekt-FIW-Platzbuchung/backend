@@ -1,6 +1,6 @@
 
 [
-    { "userId": 1, "name": "Anna Müller" },
+  { "userId": 1, "name": "Anna Müller" },
   { "userId": 2, "name": "Max Mustermann" },
   { "userId": 3, "name": "Julia Schmidt" },
   { "userId": 4, "name": "Peter Müller" },

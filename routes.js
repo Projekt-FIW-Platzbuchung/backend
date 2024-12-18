@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const seat = require("./models/seat");
+const seatService = require("./services/seatService.js")
 const bookings = require("./models/bookings");
 const user = require("./models/user");
 const moment = require("moment");
+const mongoose = require('mongoose');
 
 const { bookingInformationByDate } = require("./helpers_database_requests.js");
 
@@ -111,6 +113,55 @@ router.get("/seat/:seatId", async (req, res) => {
   } catch (error) {
     console.error("Error fetching seat details:", error);
     res.status(500).send(error.message);
+  }
+});
+
+router.delete('/seat/:seatId', async (req, res) => {
+  try {
+    const seatId = req.params.seatId;
+    
+    if (!seatId) {
+      return res.status(400).json({ message: 'Invalid seat ID' });
+    }
+
+    console.log(`Attempting to delete seat with ID: ${seatId}`);
+    const result = await seatService.deleteOneSeat(seatId);
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'Seat not found' });
+    }
+      console.log(`Successfully deleted seat with ID: ${req.params.seatId}`);
+      res.status(200).json({ message: 'Seat successfully deleted', seatId: req.params.seatId });
+    } catch (err) {
+    console.error(`Error deleting seat: ${err.message}`);
+    res.status(500).json({ error: 'Internal Server Error', details: err.message });
+  }
+});
+
+// POST-Anfrage für einen neuen Platz
+router.post('/seat', async (req, res) => {
+  console.log('Request body:', req.body); 
+  const seatData = {
+    seatId: req.body.seatId,
+    properties: {
+      Table: req.body.Table,
+      Monitor: req.body.Monitor,
+      WindowSeat: req.body.WindowSeat,
+      TableType: req.body.TableType,
+      Accessibility: req.body.Accessibility,
+      Acoustics: req.body.Acoustics,
+      WorkTop: req.body.WorkTop,
+      Chair: req.body.Chair
+    }
+  };
+  
+  try {
+    const newSeat = new seat(seatData);
+    const savedSeat = await newSeat.save();
+    res.status(201).send(savedSeat);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Fehler beim Speichern des neuen Platzes");
   }
 });
 

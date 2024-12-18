@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 
 const seatScheme = new mongoose.Schema({
@@ -17,6 +16,5 @@ const seatScheme = new mongoose.Schema({
         //notizenfeld
     }
 });
-
 
 module.exports = mongoose.model('seat', seatScheme, 'seat');

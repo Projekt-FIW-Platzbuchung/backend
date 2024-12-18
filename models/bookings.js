@@ -8,6 +8,4 @@ const bookingScheme = new mongoose.Schema({
     date: { type: String, required: true } 
 });
 
-
-
 module.exports = mongoose.model('bookings', bookingScheme, 'bookings');
