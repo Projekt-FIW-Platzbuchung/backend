@@ -7,19 +7,15 @@ const bookingScheme = new mongoose.Schema({
   date: { type: String, required: true },
 });
 
-bookingScheme.pre("save", async function (next) {
-  const existingBooking = await mongoose.model("bookings").findOne({
-    seatId: this.seatId,
-    date: this.date,
-  });
-
+bookingScheme.pre('save', async function (next) {
+  const existingBooking = await mongoose.model('bookings').findOne({ seatId: this.seatId, date: this.date });
   if (existingBooking) {
-    message = "Dieser Platz ist an dem angegebenen Datum bereits gebucht.";
-    
-    return next(new Error());
+    const error = new Error('Dieser Sitzplatz ist an dem gewählten Datum bereits gebucht.');
+    return next(error);
   }
-
   next();
 });
+
+
 
 module.exports = mongoose.model("bookings", bookingScheme, "bookings");

@@ -22,6 +22,7 @@ router.get("/seat", async (req, res) => {
 
 //POST-Anfrage für ein neues booking
 router.post("/booking", async (req, res) => {
+  try {
   const formattedDate = moment(req.body.date).format("YYYY-MM-DD");
   const bookingsData = {
     userId: req.body.userId,
@@ -37,8 +38,16 @@ router.post("/booking", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send("Fehler beim Speichern der Buchung");
+  }}
+  catch (error) {
+    if (error.message.includes('Dieser Sitzplatz ist an dem gewählten Datum bereits gebucht')) {
+      res.status(400).send({ error: error.message });
+    } else {
+      res.status(500).send({ error: 'Ein unerwarteter Fehler ist aufgetreten.' });
+    }
   }
-});
+}
+);
 
 // GET-anfrage für alle bookings an einem datum
 router.get("/date", async (req, res) => {
