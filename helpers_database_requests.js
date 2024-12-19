@@ -10,8 +10,7 @@ const user = require("./models/user");
  * @return {Array} - results of aggregation: seats with properties, status and bookingDetails
  */
 async function bookingInformationByDate(date) {
-  console.log(typeof date);
-
+  
   try {
     const results = await seat.aggregate([
       {
@@ -61,7 +60,8 @@ async function bookingInformationByDate(date) {
       },
     ]);
 
-    console.log(JSON.stringify(results, null, 2));
+    //console.log(JSON.stringify(results, null, 2));
+    console.log(typeof(properties))
 
     return results;
   } catch (error) {
@@ -71,5 +71,5 @@ async function bookingInformationByDate(date) {
 }
 
 module.exports = {
-  bookingInformationByDate,
+  bookingInformationByDate
 };
