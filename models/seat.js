@@ -14,6 +14,12 @@ const seatScheme = new mongoose.Schema({
         //hdmi kabel
         //monitor defekt
         //notizenfeld
+    },
+    coordinates: {
+        x: { type: Number, required: true},
+        y: { type: Number, required: true},
+
+
     }
 });
 

@@ -28,6 +28,7 @@ router.post("/booking", async (req, res) => {
     username: req.body.username,
     seatId: req.body.seatId,
     date: formattedDate,
+    coordinates: req.body.coordinates
   };
 
   try {
