@@ -138,18 +138,14 @@ router.delete("/seat/:seatId", async (req, res) => {
     if (result.deletedCount === 0) {
       return res.status(404).json({ message: "Seat not found" });
     }
-    console.log(`Successfully deleted seat with ID: ${req.params.seatId}`);
-    res
-      .status(200)
-      .json({
+    console.log(`Successfully deleted seat with ID: ${seatId}`);
+    res.status(200).json({
         message: "Seat successfully deleted",
-        seatId: req.params.seatId,
+        seatId: seatId,
       });
   } catch (err) {
     console.error(`Error deleting seat: ${err.message}`);
-    res
-      .status(500)
-      .json({ error: "Internal Server Error", details: err.message });
+    res.status(500).json({ error: "Internal Server Error", details: err.message });
   }
 });
 
