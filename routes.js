@@ -22,14 +22,7 @@ router.get("/seat", async (req, res) => {
 
 //POST-Anfrage für ein neues booking
 router.post("/booking", async (req, res) => {
-  const formattedDate = moment(req.body.date).format("YYYY-MM-DD");
-  const bookingsData = {
-    userId: req.body.userId,
-    username: req.body.username,
-    seatId: req.body.seatId,
-    date: formattedDate,
-    coordinates: req.body.coordinates
-  };
+
 
   try {
     const formattedDate = moment(req.body.date).format("YYYY-MM-DD");
@@ -38,6 +31,7 @@ router.post("/booking", async (req, res) => {
       username: req.body.username,
       seatId: req.body.seatId,
       date: formattedDate,
+      coordinates: req.body.coordinates
     };
 
     try {
@@ -94,6 +88,7 @@ router.get("/bookingstatus", async (req, res) => {
 
     // Sendet die aggregierten Daten als JSON zurück
     res.json(aggregation);
+   // console.log(aggregation);
   } catch (error) {
     console.error("Fehler beim Aufrufen des Buchungsstatus:", error);
     res.status(500).json({ error: "Ein interner Fehler ist aufgetreten." });
