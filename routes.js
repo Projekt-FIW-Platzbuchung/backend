@@ -151,7 +151,6 @@ router.delete("/seat/:seatId", async (req, res) => {
 
 // POST-Anfrage für einen neuen Platz
 router.post("/seat", async (req, res) => {
-  console.log("Request body:", req.body);
   try {
     // Suche nach dem aktuell höchsten seatId-Wert
     const lastSeat = await seat.findOne().sort("-seatId").exec();
@@ -163,54 +162,15 @@ router.post("/seat", async (req, res) => {
       return res.status(500).send("Fehler beim Generieren einer neuen seatId");
     }
 
-     // Standardisierte Feld-Zuweisung, überprüft, ob sie in req.body.properties enthalten sind
-    /*const standardProperties = {
-      Table: req.body.properties?.Table,
-      Monitor: req.body.properties?.Monitor,
-      WindowSeat: req.body.properties?.WindowSeat,
-      TableType: req.body.properties?.TableType,
-      Accessibility: req.body.properties?.Accessibility,
-      Acoustics: req.body.properties?.Acoustics,
-      WorkTop: req.body.properties?.WorkTop,
-      Chair: req.body.properties?.Chair,
-    };*/
-
-    // Dynamische Eigenschaften
-    // const dynamicProperties = req.body.properties || {};
-
     const properties = req.body.properties || {};
-
-    // Kombiniert standardisierte und dynamische Eigenschaften
-    /*const combinedProperties = { 
-      ...standardProperties, 
-    };  */
-    // Übergabe der vollständigen dynamischen Eigenschaften, Initialisieren der dynamischen `additionalProperties`
-    // combinedProperties.additionalProperties = { ...dynamicProperties };
-
-   /* for (const key in dynamicProperties) {
-      if (!standardProperties.hasOwnProperty(key)) {
-        combinedProperties[key] = dynamicProperties[key]; // Weise dynamische Eigenschaften zu
-      }
-    }*/
-
-    //console.log("Standard properties:", standardProperties);
-    //console.log("Dynamic properties:", dynamicProperties);
-    //console.log("Combined properties:", combinedProperties);
 
     const seatData = { seatId: newSeatId, properties: properties };
   
     const newSeat = new seat(seatData);
-    /* const newSeat = new Seat({
-      seatId: newSeatId,
-      properties: combinedProperties
-    }); */
+
     const savedSeat = await newSeat.save();
     console.log("Saved Seat:", savedSeat);
 
-    /*res.status(201).json({
-      ...savedSeat.toObject(), // Verwendet `toObject` falls nötig um Mongoose Dokument in ein POJO zu konvertieren
-      properties: propertiesJSON
-    });*/
     res.status(201).json(savedSeat);
     } catch (err) {
     console.log("Error during seat creation:", err);
