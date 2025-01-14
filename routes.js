@@ -163,11 +163,8 @@ router.post("/seat", async (req, res) => {
     }
 
     const properties = req.body.properties || {};
-
     const seatData = { seatId: newSeatId, properties: properties };
-  
     const newSeat = new seat(seatData);
-
     const savedSeat = await newSeat.save();
     console.log("Saved Seat:", savedSeat);
 
