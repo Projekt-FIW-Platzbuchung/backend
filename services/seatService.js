@@ -35,7 +35,7 @@ async function deleteOneSeat(seatId) {
         return result;
     } catch (error) {
         console.error('Error in deleteOneSeat:', error);
-        throw error; // Den Fehler weiterreichen, damit er korrekt in der Route behandelt wird  }
+        throw error; // Den Fehler weiterreichen, damit er korrekt in der Route behandelt wird
     }
 }
 

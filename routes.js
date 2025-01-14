@@ -152,36 +152,68 @@ router.delete("/seat/:seatId", async (req, res) => {
 // POST-Anfrage für einen neuen Platz
 router.post("/seat", async (req, res) => {
   console.log("Request body:", req.body);
-  // Suche nach dem aktuell höchsten seatId-Wert
-  const lastSeat = await seat.findOne().sort("-seatId").exec();
-  // Berechnet newSeatId basierend auf der höchsten vorhandenen seatId
-  const newSeatId = lastSeat ? lastSeat.seatId + 1 : 1; // Fängt mit 1 an, wenn es keine Einträge gibt
-
-  if (!newSeatId) {
-    console.error("Fehler: Keine neue seatId generierbar");
-    return res.status(500).send("Fehler beim Generieren einer neuen seatId");
-  }
-
-  const seatData = {
-    seatId: newSeatId,
-    properties: {
-      Table: req.body.Table,
-      Monitor: req.body.Monitor,
-      WindowSeat: req.body.WindowSeat,
-      TableType: req.body.TableType,
-      Accessibility: req.body.Accessibility,
-      Acoustics: req.body.Acoustics,
-      WorkTop: req.body.WorkTop,
-      Chair: req.body.Chair,
-    },
-  };
-
   try {
+    // Suche nach dem aktuell höchsten seatId-Wert
+    const lastSeat = await seat.findOne().sort("-seatId").exec();
+    // Berechnet newSeatId basierend auf der höchsten vorhandenen seatId
+    const newSeatId = lastSeat ? lastSeat.seatId + 1 : 1; // Fängt mit 1 an, wenn es keine Einträge gibt
+
+    if (!newSeatId) {
+      console.error("Fehler: Keine neue seatId generierbar");
+      return res.status(500).send("Fehler beim Generieren einer neuen seatId");
+    }
+
+     // Standardisierte Feld-Zuweisung, überprüft, ob sie in req.body.properties enthalten sind
+    /*const standardProperties = {
+      Table: req.body.properties?.Table,
+      Monitor: req.body.properties?.Monitor,
+      WindowSeat: req.body.properties?.WindowSeat,
+      TableType: req.body.properties?.TableType,
+      Accessibility: req.body.properties?.Accessibility,
+      Acoustics: req.body.properties?.Acoustics,
+      WorkTop: req.body.properties?.WorkTop,
+      Chair: req.body.properties?.Chair,
+    };*/
+
+    // Dynamische Eigenschaften
+    // const dynamicProperties = req.body.properties || {};
+
+    const properties = req.body.properties || {};
+
+    // Kombiniert standardisierte und dynamische Eigenschaften
+    /*const combinedProperties = { 
+      ...standardProperties, 
+    };  */
+    // Übergabe der vollständigen dynamischen Eigenschaften, Initialisieren der dynamischen `additionalProperties`
+    // combinedProperties.additionalProperties = { ...dynamicProperties };
+
+   /* for (const key in dynamicProperties) {
+      if (!standardProperties.hasOwnProperty(key)) {
+        combinedProperties[key] = dynamicProperties[key]; // Weise dynamische Eigenschaften zu
+      }
+    }*/
+
+    //console.log("Standard properties:", standardProperties);
+    //console.log("Dynamic properties:", dynamicProperties);
+    //console.log("Combined properties:", combinedProperties);
+
+    const seatData = { seatId: newSeatId, properties: properties };
+  
     const newSeat = new seat(seatData);
+    /* const newSeat = new Seat({
+      seatId: newSeatId,
+      properties: combinedProperties
+    }); */
     const savedSeat = await newSeat.save();
-    res.status(201).send(savedSeat);
-  } catch (err) {
-    console.log(err);
+    console.log("Saved Seat:", savedSeat);
+
+    /*res.status(201).json({
+      ...savedSeat.toObject(), // Verwendet `toObject` falls nötig um Mongoose Dokument in ein POJO zu konvertieren
+      properties: propertiesJSON
+    });*/
+    res.status(201).json(savedSeat);
+    } catch (err) {
+    console.log("Error during seat creation:", err);
     res.status(500).send("Fehler beim Speichern des neuen Platzes");
   }
 });
