@@ -138,54 +138,39 @@ router.delete("/seat/:seatId", async (req, res) => {
     if (result.deletedCount === 0) {
       return res.status(404).json({ message: "Seat not found" });
     }
-    console.log(`Successfully deleted seat with ID: ${req.params.seatId}`);
-    res
-      .status(200)
-      .json({
+    console.log(`Successfully deleted seat with ID: ${seatId}`);
+    res.status(200).json({
         message: "Seat successfully deleted",
-        seatId: req.params.seatId,
+        seatId: seatId,
       });
   } catch (err) {
     console.error(`Error deleting seat: ${err.message}`);
-    res
-      .status(500)
-      .json({ error: "Internal Server Error", details: err.message });
+    res.status(500).json({ error: "Internal Server Error", details: err.message });
   }
 });
 
 // POST-Anfrage für einen neuen Platz
 router.post("/seat", async (req, res) => {
-  console.log("Request body:", req.body);
-  // Suche nach dem aktuell höchsten seatId-Wert
-  const lastSeat = await seat.findOne().sort("-seatId").exec();
-  // Berechnet newSeatId basierend auf der höchsten vorhandenen seatId
-  const newSeatId = lastSeat ? lastSeat.seatId + 1 : 1; // Fängt mit 1 an, wenn es keine Einträge gibt
-
-  if (!newSeatId) {
-    console.error("Fehler: Keine neue seatId generierbar");
-    return res.status(500).send("Fehler beim Generieren einer neuen seatId");
-  }
-
-  const seatData = {
-    seatId: newSeatId,
-    properties: {
-      Table: req.body.Table,
-      Monitor: req.body.Monitor,
-      WindowSeat: req.body.WindowSeat,
-      TableType: req.body.TableType,
-      Accessibility: req.body.Accessibility,
-      Acoustics: req.body.Acoustics,
-      WorkTop: req.body.WorkTop,
-      Chair: req.body.Chair,
-    },
-  };
-
   try {
+    // Suche nach dem aktuell höchsten seatId-Wert
+    const lastSeat = await seat.findOne().sort("-seatId").exec();
+    // Berechnet newSeatId basierend auf der höchsten vorhandenen seatId
+    const newSeatId = lastSeat ? lastSeat.seatId + 1 : 1; // Fängt mit 1 an, wenn es keine Einträge gibt
+
+    if (!newSeatId) {
+      console.error("Fehler: Keine neue seatId generierbar");
+      return res.status(500).send("Fehler beim Generieren einer neuen seatId");
+    }
+
+    const properties = req.body.properties || {};
+    const seatData = { seatId: newSeatId, properties: properties };
     const newSeat = new seat(seatData);
     const savedSeat = await newSeat.save();
-    res.status(201).send(savedSeat);
-  } catch (err) {
-    console.log(err);
+    console.log("Saved Seat:", savedSeat);
+
+    res.status(201).json(savedSeat);
+    } catch (err) {
+    console.log("Error during seat creation:", err);
     res.status(500).send("Fehler beim Speichern des neuen Platzes");
   }
 });
