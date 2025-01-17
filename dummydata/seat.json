@@ -11,7 +11,12 @@
       "acoustics": "nicht lärmgeschützt",
       "workTop": "erweiterbar",
       "chair": "ergonomisch"
-    }
+    },
+    "coordinates": {
+     "x": 363,
+    "y": 97
+}
+
   },
   {
     "seatId": 2,
@@ -24,7 +29,11 @@
       "acoustics": "lärmgeschützt",
       "workTop": "fest",
       "chair": "standard"
-    }
+    },
+    "coordinates": {
+  "x": 136,
+  "y": 93
+}
   },
   {
     "seatId": 3,
@@ -37,7 +46,11 @@
       "acoustics": "nicht lärmgeschützt",
       "workTop": "erweiterbar",
       "chair": "ergonomisch"
-    }
+    },
+    "coordinates": {
+  "x": 89,
+  "y": 65
+}
   },
   {
     "seatId": 4,
@@ -50,7 +63,11 @@
       "acoustics": "lärmgeschützt",
       "workTop": "fest",
       "chair": "standard"
-    }
+    },
+    "coordinates": {
+  "x": 88,
+  "y": 81
+}
   },
   {
     "seatId": 5,

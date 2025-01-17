@@ -157,6 +157,9 @@ router.delete("/seat/:seatId", async (req, res) => {
   }
 });
 
+
+
+
 // POST-Anfrage für einen neuen Platz
 router.post("/seat", async (req, res) => {
   console.log("Request body:", req.body);
@@ -194,4 +197,40 @@ router.post("/seat", async (req, res) => {
   }
 });
 
+router.put("/seat/:seatId", async (req, res) => {
+  try {
+    const seatId = parseInt(req.params.seatId, 10);
+    const updatedProperties = req.body.properties;
+
+    console.log("Empfangene Eigenschaften vom Frontend:", updatedProperties);
+
+    const seat = await seat.findOne({ seatId: seatId });
+    if (!seat) {
+      return res.status(404).json({ message: "Seat nicht gefunden." });
+    }
+
+    console.log("Vorhandene Eigenschaften in der Datenbank:", seat.properties);
+
+    const newProperties = { ...seat.properties, ...updatedProperties };
+    console.log("Kombinierte Eigenschaften:", newProperties);
+
+    const result = await seat.findOneAndUpdate(
+      { seatId: seatId },
+      { $set: { properties: newProperties } },
+      { new: true }
+    );
+
+    console.log("Nach der Aktualisierung in der Datenbank:", result.properties);
+
+    res.status(200).json({ message: "Eigenschaften erfolgreich aktualisiert", updatedSeat: result });
+  } catch (error) {
+    console.error("Fehler beim Aktualisieren der Eigenschaften:", error);
+    res.status(500).json({ message: "Serverfehler.", error: error.message });
+  }
+});
+
+
+
+
 module.exports = router;
+

@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const seatScheme = new mongoose.Schema({
     seatId: { type: Number, required: true, unique: true }, // Platz-ID als Zahl
+    coordinates: {
+        x: { type: Number, required: true},
+        y: { type: Number, required: true},
+    },
     properties: {
         Table: { type: String, required: false }, // Tisch als String
         Monitor: { type: String, required: false }, // Monitor als String
@@ -14,13 +18,8 @@ const seatScheme = new mongoose.Schema({
         //hdmi kabel
         //monitor defekt
         //notizenfeld
-    },
-    coordinates: {
-        x: { type: Number, required: true},
-        y: { type: Number, required: true},
-
-
     }
+    
 });
 
 module.exports = mongoose.model('seat', seatScheme, 'seat');
