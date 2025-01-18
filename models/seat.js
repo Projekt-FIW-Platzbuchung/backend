@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-const seatScheme = new mongoose.Schema({
+const Schema = mongoose.Schema;
+
+const seatScheme = new Schema({
   seatId: { type: Number, required: true, unique: true }, // Platz-ID als Zahl
   properties: { type: Schema.Types.Mixed, default: {} }, // Nutzt den Mixed-Typ für Flexibilität bei den Eigenschaften
   coordinates: {
