@@ -3,9 +3,8 @@ const router = express.Router();
 const seat = require("./models/seat");
 const seatService = require("./services/seatService.js");
 const bookings = require("./models/bookings");
-const user = require("./models/user");
 const moment = require("moment");
-const mongoose = require("mongoose");
+
 
 const { bookingInformationByDate } = require("./helpers_database_requests.js");
 
@@ -13,7 +12,6 @@ const { bookingInformationByDate } = require("./helpers_database_requests.js");
 router.get("/seat", async (req, res) => {
   try {
     const allSeats = await seat.find();
-    console.log(allSeats);
     res.json(allSeats);
   } catch (error) {
     res.status(500).send(error.message);
@@ -22,6 +20,8 @@ router.get("/seat", async (req, res) => {
 
 //POST-Anfrage für ein neues booking
 router.post("/booking", async (req, res) => {
+
+
   try {
     const formattedDate = moment(req.body.date).format("YYYY-MM-DD");
     const bookingsData = {
@@ -29,6 +29,7 @@ router.post("/booking", async (req, res) => {
       username: req.body.username,
       seatId: req.body.seatId,
       date: formattedDate,
+      coordinates: req.body.coordinates
     };
 
     try {
@@ -85,11 +86,41 @@ router.get("/bookingstatus", async (req, res) => {
 
     // Sendet die aggregierten Daten als JSON zurück
     res.json(aggregation);
+   // console.log(aggregation);
   } catch (error) {
     console.error("Fehler beim Aufrufen des Buchungsstatus:", error);
     res.status(500).json({ error: "Ein interner Fehler ist aufgetreten." });
   }
 });
+
+// GET-Anfrage für die Details einer Buchung für Seat und Datum
+router.get('/bookingdetails', async (req, res) => {
+  try {
+    // Extract seatId and date from query parameters
+    const { seatId, date } = req.query;
+   
+    if (!seatId || !date) {
+      return res.status(400).json({ message: 'Missing seatId or date' });
+    }
+
+    
+    // Query the database for the booking details based on seatId and date
+    const bookingDetails = await bookings.findOne({
+      seatId: seatId,
+      date: date,
+    }).exec();
+
+    if (!bookingDetails) {
+      return res.status(404).json({ message: 'No booking found for this seat on the given date' });
+    }
+
+    // Return the booking details (for example, username)
+    res.status(200).json({ bookingDetails: bookingDetails });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+}); 
 
 // DELETE-Anfrage für eine Buchung
 router.delete("/bookings/:id", async (req, res) => {
@@ -163,7 +194,8 @@ router.post("/seat", async (req, res) => {
     }
 
     const properties = req.body.properties || {};
-    const seatData = { seatId: newSeatId, properties: properties };
+    const coordinates = req.body.coordinates || {};
+    const seatData = { seatId: newSeatId, properties: properties, coordinates: coordinates };
     const newSeat = new seat(seatData);
     const savedSeat = await newSeat.save();
     console.log("Saved Seat:", savedSeat);
