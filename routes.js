@@ -20,8 +20,6 @@ router.get("/seat", async (req, res) => {
 
 //POST-Anfrage für ein neues booking
 router.post("/booking", async (req, res) => {
-
-
   try {
     const formattedDate = moment(req.body.date).format("YYYY-MM-DD");
     const bookingsData = {
@@ -144,6 +142,7 @@ router.get("/bookings/user/:userId", async (req, res) => {
   }
 });
 
+// Get-Anfrage für einen Platz
 router.get("/seat/:seatId", async (req, res) => {
   try {
     const seatId = parseInt(req.params.seatId, 10); // Konvertiert seatId zu einer Zahl
@@ -194,7 +193,7 @@ router.post("/seat", async (req, res) => {
     }
 
     const properties = req.body.properties || {};
-    const coordinates = req.body.coordinates || {};
+    const coordinates = req.body.coordinates;
     const seatData = { seatId: newSeatId, properties: properties, coordinates: coordinates };
     const newSeat = new seat(seatData);
     const savedSeat = await newSeat.save();
@@ -205,6 +204,64 @@ router.post("/seat", async (req, res) => {
     console.log("Error during seat creation:", err);
     res.status(500).send("Fehler beim Speichern des neuen Platzes");
   }
+});
+
+// UPDATE-Anfrage für einen Platz
+router.put("/seat/:seatId", async (req, res) => {
+  try {
+    const seatId = parseInt(req.params.seatId, 10);
+    const updatedCoordinates = req.body.coordinates || {}; // erwartet ein Objekt { x: value, y: value }
+    const updatedProperties = req.body.properties || {}; // erwartet ein Objekt mit neuen/aktualisierten Properties
+
+    console.log("Empfangene Koordinaten vom Frontend:", updatedCoordinates);
+    console.log("Empfangene Eigenschaften vom Frontend:", updatedProperties);
+
+    const seatDoc = await seat.findOne({ seatId: seatId });
+    if (!seatDoc) {
+      return res.status(404).json({ message: "Seat nicht gefunden." });
+    }
+
+    // Aktualisiert die Koordinaten, wenn sie vorhanden sind
+    let newCoordinates = { ...seatDoc.coordinates };
+    if (updatedCoordinates && typeof updatedCoordinates === 'object') {
+      if (updatedCoordinates.x !== undefined) {
+        newCoordinates.x = updatedCoordinates.x;
+      }
+      if (updatedCoordinates.y !== undefined) {
+        newCoordinates.y = updatedCoordinates.y;
+      }
+    }
+
+    console.log("Vorhandene Eigenschaften in der Datenbank:", seatDoc.properties);
+
+    const currentProperties = seatDoc.properties || {};
+
+    // Löscht explizit definierte Eigenschaften (z.B., wenn der Key zum Löschen übermittelt wird)
+    const propertiesToDelete = req.body.propertiesToDelete || []; // Array von Schlüssel-Strings, die gelöscht werden sollen
+
+    propertiesToDelete.forEach(key => {
+      delete currentProperties[key];
+    });
+
+    // Iteriert über die Schlüssel von updatedProperties
+    for (const [key, value] of Object.entries(updatedProperties)) {
+      currentProperties[key] = value; // Aktualisiert den bestehenden Wert oder fügt einen neuen hinzu
+    }
+
+    // Speichert die aktualisierten Koordinaten und Eigenschaften zurück in die Datenbank
+    const updatedSeat = await seat.findOneAndUpdate(
+      { seatId: seatId },
+      { $set: { coordinates: newCoordinates, properties: currentProperties } },
+      { new: true }
+    );
+
+    console.log("Nach der Aktualisierung in der Datenbank:", updatedSeat.properties);
+
+    res.status(200).json({ message: "Koordinaten und Eigenschaften erfolgreich aktualisiert", updatedSeat: updatedSeat });
+  } catch (error) {
+    console.error("Fehler beim Aktualisieren der Eigenschaften:", error);
+    res.status(500).json({ message: "Serverfehler.", error: error.message });
+  }    
 });
 
 module.exports = router;
