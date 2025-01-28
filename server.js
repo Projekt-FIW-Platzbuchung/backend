@@ -8,9 +8,27 @@ require('./tasks/cronjob_delete_old_bookings');
 const app = express();
 const PORT = process.env.PORT
 
+const authenticateJWT = require('./middleware/authenticateJWT');
+const generateTokenRoute = require('./generateToken');
+
 app.use(express.json());
-app.use(cors());
+app.use(cors({origin: 'http://localhost:4200'}));
+console.log('Setting up routes');  // Log zur Bestätigung der Routeninitialisierung
+
+app.use((req, res, next) => {
+    console.log(`Received a ${req.method} request to ${req.url}`);
+    next();
+});
+
 app.use('/', routes); 
+
+app.use('/api', generateTokenRoute);
+
+app.get('/api/protected-route', authenticateJWT, (req, res) => {
+    console.log('Accessing protected route');  // Log bei Zugriff auf die geschützte Route
+
+    res.send('This is a protected route accessible only with a valid token');
+});
 
 mongoose.connect(process.env.MONGODB_URI, { dbName: process.env.DB_NAME })
     .then(() => console.log(`Erfolgreich mit der Datenbank verbunden ${process.env.DB_NAME}`))

@@ -5,7 +5,6 @@ const seatService = require("./services/seatService.js");
 const bookings = require("./models/bookings");
 const moment = require("moment");
 
-
 const { bookingInformationByDate } = require("./helpers_database_requests.js");
 
 // eine GET-Anfrage alle seats
