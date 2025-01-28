@@ -9,6 +9,56 @@ const moment = require("moment");
 const { bookingInformationByDate } = require("./helpers_database_requests.js");
 
 // eine GET-Anfrage alle seats
+/**
+ * @swagger
+ * /booking:
+ *   post:
+ *     summary: Create a new booking
+ *     description: Create a booking for a user with a specified seat and date. Validates that:
+ *       - The seat is not already booked for the specified date.
+ *       - The seat exists in the `seat` collection.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: integer
+ *                 example: 123
+ *                 description: The ID of the user creating the booking. References the `user` collection.
+ *               username:
+ *                 type: string
+ *                 example: "John Doe"
+ *                 description: The name of the user.
+ *               seatId:
+ *                 type: integer
+ *                 example: 1
+ *                 description: The ID of the seat to book. References the `seat` collection.
+ *               date:
+ *                 type: string
+ *                 format: date
+ *                 example: "2023-01-01"
+ *                 description: The date for which the seat is being booked.
+ *               coordinates:
+ *                 type: object
+ *                 properties:
+ *                   x:
+ *                     type: number
+ *                     example: 5.3
+ *                   y:
+ *                     type: number
+ *                     example: 7.2
+ *                 description: Coordinates of the seat.
+ *     responses:
+ *       201:
+ *         description: Successfully created the booking.
+ *       400:
+ *         description: Invalid input or seat already booked.
+ *       500:
+ *         description: Internal server error.
+ */
 router.get("/seat", async (req, res) => {
   try {
     const allSeats = await seat.find();
