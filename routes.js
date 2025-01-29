@@ -221,6 +221,36 @@ router.get("/bookingstatus", async (req, res) => {
 });
 
 // GET-Anfrage für die Details einer Buchung für Seat und Datum
+/**
+ * @swagger
+ * /bookingdetails:
+ *   get:
+ *     summary: Get booking details for a specific seat on a given date
+ *     description: Fetches booking information, including the username, for a particular seat on a specified date.
+ *     parameters:
+ *       - in: query
+ *         name: seatId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the seat.
+ *       - in: query
+ *         name: date
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: The booking date.
+ *     responses:
+ *       200:
+ *         description: Booking details for the seat.
+ *       400:
+ *         description: Missing seatId or date.
+ *       404:
+ *         description: No booking found.
+ *       500:
+ *         description: Server error.
+ */
 router.get('/bookingdetails', async (req, res) => {
   try {
     // Extract seatId and date from query parameters
