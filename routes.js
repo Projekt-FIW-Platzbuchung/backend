@@ -338,6 +338,24 @@ router.get("/bookings/user/:userId", async (req, res) => {
 });
 
 // Get-Anfrage für einen Platz
+/**
+ * @swagger
+ * /seat/{seatId}:
+ *   get:
+ *     summary: Retrieve details of a specific seat
+ *     parameters:
+ *       - in: path
+ *         name: seatId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the seat.
+ *     responses:
+ *       200:
+ *         description: Seat details.
+ *       404:
+ *         description: Seat not found.
+ */
 router.get("/seat/:seatId", async (req, res) => {
   try {
     const seatId = parseInt(req.params.seatId, 10); // Konvertiert seatId zu einer Zahl
