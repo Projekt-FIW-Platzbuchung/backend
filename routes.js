@@ -309,6 +309,24 @@ router.delete("/bookings/:id", async (req, res) => {
 });
 
 //GET-Anfrage Bookings für bestimmten User
+/**
+ * @swagger
+ * /bookings/user/{userId}:
+ *   get:
+ *     summary: Get all bookings for a specific user
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: User ID whose bookings need to be retrieved.
+ *     responses:
+ *       200:
+ *         description: List of bookings for the user.
+ *       500:
+ *         description: Server error.
+ */
 router.get("/bookings/user/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
