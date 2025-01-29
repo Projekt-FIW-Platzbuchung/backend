@@ -411,6 +411,17 @@ router.delete("/seat/:seatId", async (req, res) => {
 });
 
 // POST-Anfrage für einen neuen Platz
+/**
+ * @swagger
+ * /seat:
+ *   post:
+ *     summary: Create a new seat
+ *     responses:
+ *       201:
+ *         description: Seat created successfully.
+ *       500:
+ *         description: Error occurred during seat creation.
+ */
 router.post("/seat", async (req, res) => {
   try {
     // Suche nach dem aktuell höchsten seatId-Wert
