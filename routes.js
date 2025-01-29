@@ -11,6 +11,55 @@ const { bookingInformationByDate } = require("./helpers_database_requests.js");
 // eine GET-Anfrage alle seats
 /**
  * @swagger
+ * /seat:
+ *   post:
+ *     summary: Create a new seat
+ *     description: Create a new seat in the database.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               seatId:
+ *                 type: integer
+ *                 example: 1
+ *                 description: Unique ID for the seat.
+ *               properties:
+ *                 type: object
+ *                 example: { "type": "premium", "capacity": 4 }
+ *                 description: Additional properties for the seat.
+ *               coordinates:
+ *                 type: object
+ *                 properties:
+ *                   x:
+ *                     type: number
+ *                     example: 5.3
+ *                   y:
+ *                     type: number
+ *                     example: 7.2
+ *                 description: Coordinates of the seat.
+ *     responses:
+ *       201:
+ *         description: Successfully created the seat.
+ *       400:
+ *         description: Invalid input.
+ *       500:
+ *         description: Internal server error.
+ */
+router.get("/seat", async (req, res) => {
+  try {
+    const allSeats = await seat.find();
+    res.json(allSeats);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+//POST-Anfrage für ein neues booking
+/**
+ * @swagger
  * /booking:
  *   post:
  *     summary: Create a new booking
@@ -59,16 +108,6 @@ const { bookingInformationByDate } = require("./helpers_database_requests.js");
  *       500:
  *         description: Internal server error.
  */
-router.get("/seat", async (req, res) => {
-  try {
-    const allSeats = await seat.find();
-    res.json(allSeats);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-});
-
-//POST-Anfrage für ein neues booking
 router.post("/booking", async (req, res) => {
   try {
     const formattedDate = moment(req.body.date).format("YYYY-MM-DD");
