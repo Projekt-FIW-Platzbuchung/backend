@@ -177,6 +177,26 @@ router.get("/date", async (req, res) => {
 });
 
 // GET-Anfrage für den Buchungsstatus aller Plätze an einem Datum
+/**
+ * @swagger
+ * /bookingstatus:
+ *   get:
+ *     summary: Retrieve booking status of all seats for a specific date
+ *     description: Returns an aggregation of booking statuses for all seats on a given date.
+ *     parameters:
+ *       - in: query
+ *         name: date
+ *         required: false
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: The date for which booking status should be checked. Defaults to today's date if not provided.
+ *     responses:
+ *       200:
+ *         description: Booking status of all seats.
+ *       500:
+ *         description: Server error.
+ */
 router.get("/bookingstatus", async (req, res) => {
   try {
     // Holt das Datum aus den Abfrageparametern
