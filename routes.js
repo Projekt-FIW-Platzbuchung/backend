@@ -280,6 +280,24 @@ router.get('/bookingdetails', async (req, res) => {
 }); 
 
 // DELETE-Anfrage für eine Buchung
+/**
+ * @swagger
+ * /bookings/{id}:
+ *   delete:
+ *     summary: Delete a booking by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the booking to delete.
+ *     responses:
+ *       204:
+ *         description: Booking deleted successfully.
+ *       404:
+ *         description: Booking not found.
+ */
 router.delete("/bookings/:id", async (req, res) => {
   try {
     await bookings.deleteOne({ _id: req.params.id });
