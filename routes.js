@@ -143,6 +143,26 @@ router.post("/booking", async (req, res) => {
 });
 
 // GET-anfrage für alle bookings an einem datum
+/**
+ * @swagger
+ * /date:
+ *   get:
+ *     summary: Retrieve all bookings for a specific date
+ *     description: Fetches all bookings that exist on a given date.
+ *     parameters:
+ *       - in: query
+ *         name: date
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: The date in format YYYY-MM-DD
+ *     responses:
+ *       200:
+ *         description: A list of bookings for the specified date.
+ *       500:
+ *         description: Server error.
+ */
 router.get("/date", async (req, res) => {
   try {
     const oneDate = await bookings.find({
