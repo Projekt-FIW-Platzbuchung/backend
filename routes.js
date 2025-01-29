@@ -449,6 +449,17 @@ router.post("/seat", async (req, res) => {
 });
 
 // UPDATE-Anfrage für einen Platz
+/**
+ * @swagger
+ * /seat/{seatId}:
+ *   put:
+ *     summary: Update a seat's coordinates or properties
+ *     responses:
+ *       200:
+ *         description: Seat updated successfully.
+ *       404:
+ *         description: Seat not found.
+ */
 router.put("/seat/:seatId", async (req, res) => {
   try {
     const seatId = parseInt(req.params.seatId, 10);
