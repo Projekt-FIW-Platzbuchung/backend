@@ -372,6 +372,24 @@ router.get("/seat/:seatId", async (req, res) => {
 });
 
 // DELETE-Anfrage für einen nicht mehr benötigten Platz
+/**
+ * @swagger
+ * /seat/{seatId}:
+ *   delete:
+ *     summary: Delete a seat
+ *     parameters:
+ *       - in: path
+ *         name: seatId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the seat to delete.
+ *     responses:
+ *       200:
+ *         description: Seat deleted successfully.
+ *       404:
+ *         description: Seat not found.
+ */
 router.delete("/seat/:seatId", async (req, res) => {
   try {
     const seatId = parseInt(req.params.seatId, 10); // Konvertiert seatId zu einer Zahl
