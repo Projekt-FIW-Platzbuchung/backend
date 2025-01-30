@@ -425,15 +425,17 @@ router.delete("/seat/:seatId", async (req, res) => {
  */
 router.post("/seat", async (req, res) => {
   try {
-    // Suche nach dem aktuell höchsten seatId-Wert
-    const lastSeat = await seat.findOne().sort("-seatId").exec();
-    // Berechnet newSeatId basierend auf der höchsten vorhandenen seatId
-    const newSeatId = lastSeat ? lastSeat.seatId + 1 : 1; // Fängt mit 1 an, wenn es keine Einträge gibt
+    const seats = await seat.find().sort("seatId").exec();
+    let newSeatId = 1;
 
-    if (!newSeatId) {
-      console.error("Fehler: Keine neue seatId generierbar");
-      return res.status(500).send("Fehler beim Generieren einer neuen seatId");
+    for (let i = 0; i < seats.length; i++) {
+      if (seats[i].seatId !== i+1 ) {
+        newSeatId = i+1;
+        break;
+      }
+      newSeatId = i + 2;
     }
+  
 
     const properties = req.body.properties || {};
     const coordinates = req.body.coordinates;
