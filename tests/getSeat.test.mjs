@@ -1,6 +1,6 @@
 const chai = import("chai");
 const chaiHttp = import("chai-http");
-const expect = chai.expect
+import{ expect } from 'chai';
 const baseUrl = "localhost:4000/"
 
 chai.use(chaiHttp);
