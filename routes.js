@@ -12,39 +12,12 @@ const { bookingInformationByDate } = require("./helpers_database_requests.js");
 /**
  * @swagger
  * /seat:
- *   post:
- *     summary: Create a new seat
- *     description: Create a new seat in the database.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               seatId:
- *                 type: integer
- *                 example: 1
- *                 description: Unique ID for the seat.
- *               properties:
- *                 type: object
- *                 example: { "monitor": "4inch", "window": true }
- *                 description: Additional properties for the seat.
- *               coordinates:
- *                 type: object
- *                 properties:
- *                   x:
- *                     type: number
- *                     example: 5.3
- *                   y:
- *                     type: number
- *                     example: 7.2
- *                 description: Coordinates of the seat.
+ *   get:
+ *     summary: Retrieve all seats
+ *     description: Fetch all available seats from the database.
  *     responses:
- *       201:
- *         description: Successfully created the seat.
- *       400:
- *         description: Invalid input.
+ *       200:
+ *         description: Successfully retrieved the seats.
  *       500:
  *         description: Internal server error.
  */
