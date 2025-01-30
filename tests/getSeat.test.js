@@ -36,7 +36,8 @@ it('server is live', function(done) {
         .get('/seat')
         .end(function (err, res) {
             expect(res).to.have.status(200);
-            expect(res.text).to.equal("Hurray! Its live.");
+            expect(res.body).to.be.an("array");
+            expect(res.body).to.deep.equal(mockSeats);
             done();
         });
     })
