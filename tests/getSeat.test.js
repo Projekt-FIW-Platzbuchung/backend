@@ -7,7 +7,7 @@ chai.use(chaiHttp);
 describe("getSeat Test", function(){
 it('server is live', function(done) {
         chai.request(baseUrl)
-        .get('/')
+        .get('/seat')
         .end(function (err, res) {
             expect(res).to.have.status(200);
             expect(res.text).to.equal("Hurray! Its live.");
