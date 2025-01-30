@@ -63,7 +63,7 @@ router.get("/seat", async (req, res) => {
  * /booking:
  *   post:
  *     summary: Create a new booking
- *     description: Create a booking for a user with a specified seat and date. Validates that:
+ *     description: | Create a booking for a user with a specified seat and date. Validates that:
  *       - The seat is not already booked for the specified date.
  *       - The seat exists in the `seat` collection.
  *     requestBody:
