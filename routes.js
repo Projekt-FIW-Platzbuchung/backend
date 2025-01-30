@@ -28,7 +28,7 @@ const { bookingInformationByDate } = require("./helpers_database_requests.js");
  *                 description: Unique ID for the seat.
  *               properties:
  *                 type: object
- *                 example: { "type": "premium", "capacity": 4 }
+ *                 example: { "monitor": "4inch", "window": true }
  *                 description: Additional properties for the seat.
  *               coordinates:
  *                 type: object
