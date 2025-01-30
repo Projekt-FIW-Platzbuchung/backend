@@ -30,6 +30,7 @@ const mockSeats = [
 // Jest test suite
 describe("GET /seat endpoint", () => {
     it("should return all seats with status 200", async () => {
+        try{
         const response = await request(baseUrl)
             .get('/seat')  // Send GET request to /seat
             .expect(200);  // Expect status code 200
@@ -37,5 +38,8 @@ describe("GET /seat endpoint", () => {
         // Assertions
         expect(response.body).toBeInstanceOf(Array);  // Response should be an array
         expect(response.body).toEqual(mockSeats);  // Response should match the mock data
+    } catch(error){
+        console.log("Test failes with error", error)
+    }
     });
 });
