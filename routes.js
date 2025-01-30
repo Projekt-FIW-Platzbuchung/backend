@@ -178,6 +178,24 @@ router.post("/seat", async (req, res) => {
   }
 });
 
+
+// Bestehende Buchungen für einen bestimmten Sitzplatz abrufen
+router.get("/bookings/seat/:seatId", async (req, res) => {
+  try {
+    const seatId = parseInt(req.params.seatId, 10);
+    const bookingsList = await bookings.find({ seatId: seatId });
+    
+    if (!bookingsList.length) {
+      return res.status(404).json({ message: "Keine Buchungen gefunden." });
+    }
+
+    res.json(bookingsList);
+  } catch (err) {
+    res.status(500).json({ error: "Fehler beim Abrufen der Buchungen." });
+  }
+});
+
+
 // UPDATE-Anfrage für einen Platz
 router.put("/seat/:seatId", async (req, res) => {
   try {
@@ -234,6 +252,8 @@ router.put("/seat/:seatId", async (req, res) => {
     console.error("Fehler beim Aktualisieren der Eigenschaften:", error);
     res.status(500).json({ message: "Serverfehler.", error: error.message });
   }    
+
+
 });
 
 module.exports = router;
