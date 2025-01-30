@@ -29,3 +29,7 @@ npm start
 ```
 npm test
 ```
+for shorter output use
+```
+npm run test -- --silent 
+```
