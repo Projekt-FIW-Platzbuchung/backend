@@ -3,13 +3,15 @@ const cors = require('cors');
 const express = require('express');
 const routes = require('./routes');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 require('./tasks/cronjob_delete_old_bookings');
 
 const app = express();
 const PORT = process.env.PORT
+const secretKey = process.env.SECRET_KEY;
 
-const authenticateJWT = require('./middleware/authenticateJWT');
-const generateTokenRoute = require('./generateToken');
+//const authenticateJWT = require('./middleware/authenticateJWT');
+//const generateTokenRoute = require('./generateToken');
 
 app.use(express.json());
 app.use(cors({origin: 'http://localhost:4200'}));
@@ -22,13 +24,13 @@ app.use((req, res, next) => {
 
 app.use('/', routes); 
 
-app.use('/api', generateTokenRoute);
+/*app.use('/api', generateTokenRoute);
 
 app.get('/api/protected-route', authenticateJWT, (req, res) => {
     console.log('Accessing protected route');  // Log bei Zugriff auf die geschützte Route
 
     res.send('This is a protected route accessible only with a valid token');
-});
+});*/
 
 mongoose.connect(process.env.MONGODB_URI, { dbName: process.env.DB_NAME })
     .then(() => console.log(`Erfolgreich mit der Datenbank verbunden ${process.env.DB_NAME}`))
