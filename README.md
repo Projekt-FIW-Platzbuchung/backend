@@ -17,6 +17,7 @@ npm install moment
 npm install --save-dev jest
 npm install --save-dev supertest
 npm install node-cron
+npm install jsonwebtoken
 ```
 - Build and run the project
 ```

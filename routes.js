@@ -4,11 +4,12 @@ const seat = require("./models/seat");
 const seatService = require("./services/seatService.js");
 const bookings = require("./models/bookings");
 const moment = require("moment");
+const authenticateJWT = require('./middleware/authenticateJWT');
 
 const { bookingInformationByDate } = require("./helpers_database_requests.js");
 
 // eine GET-Anfrage alle seats
-router.get("/seat", async (req, res) => {
+router.get("/seat", authenticateJWT, async (req, res) => {
   try {
     const allSeats = await seat.find();
     res.json(allSeats);
@@ -18,7 +19,7 @@ router.get("/seat", async (req, res) => {
 });
 
 //POST-Anfrage für ein neues booking
-router.post("/booking", async (req, res) => {
+router.post("/booking", authenticateJWT, async (req, res) => {
   try {
     const formattedDate = moment(req.body.date).format("YYYY-MM-DD");
     const bookingsData = {
@@ -53,7 +54,7 @@ router.post("/booking", async (req, res) => {
 });
 
 // GET-anfrage für alle bookings an einem datum
-router.get("/date", async (req, res) => {
+router.get("/date", authenticateJWT, async (req, res) => {
   try {
     const oneDate = await bookings.find({
       date: "2023-10-10",
@@ -67,7 +68,7 @@ router.get("/date", async (req, res) => {
 });
 
 // GET-Anfrage für den Buchungsstatus aller Plätze an einem Datum
-router.get("/bookingstatus", async (req, res) => {
+router.get("/bookingstatus", authenticateJWT, async (req, res) => {
   try {
     // Holt das Datum aus den Abfrageparametern
     let date = req.query.date;
@@ -91,7 +92,7 @@ router.get("/bookingstatus", async (req, res) => {
 });
 
 // GET-Anfrage für die Details einer Buchung für Seat und Datum
-router.get('/bookingdetails', async (req, res) => {
+router.get('/bookingdetails', authenticateJWT, async (req, res) => {
   try {
     // Extract seatId and date from query parameters
     const { seatId, date } = req.query;
@@ -120,7 +121,7 @@ router.get('/bookingdetails', async (req, res) => {
 }); 
 
 // DELETE-Anfrage für eine Buchung
-router.delete("/bookings/:id", async (req, res) => {
+router.delete("/bookings/:id", authenticateJWT, async (req, res) => {
   try {
     await bookings.deleteOne({ _id: req.params.id });
     res.status(204).send();
@@ -131,7 +132,7 @@ router.delete("/bookings/:id", async (req, res) => {
 });
 
 //GET-Anfrage Bookings für bestimmten User
-router.get("/bookings/user/:userId", async (req, res) => {
+router.get("/bookings/user/:userId", authenticateJWT, async (req, res) => {
   try {
     const userId = req.params.userId;
     const userBookings = await bookings.find({ userId: userId });
@@ -142,7 +143,7 @@ router.get("/bookings/user/:userId", async (req, res) => {
 });
 
 // Get-Anfrage für einen Platz
-router.get("/seat/:seatId", async (req, res) => {
+router.get("/seat/:seatId", authenticateJWT, async (req, res) => {
   try {
     const seatId = parseInt(req.params.seatId, 10); // Konvertiert seatId zu einer Zahl
     console.log(`Fetching seat details for seatId: ${req.params.seatId}`); // Debugging
@@ -158,7 +159,7 @@ router.get("/seat/:seatId", async (req, res) => {
 });
 
 // DELETE-Anfrage für einen nicht mehr benötigten Platz
-router.delete("/seat/:seatId", async (req, res) => {
+router.delete("/seat/:seatId", authenticateJWT, async (req, res) => {
   try {
     const seatId = parseInt(req.params.seatId, 10); // Konvertiert seatId zu einer Zahl
     console.log(`Attempting to delete seat with ID: ${seatId}`);
@@ -179,7 +180,7 @@ router.delete("/seat/:seatId", async (req, res) => {
 });
 
 // POST-Anfrage für einen neuen Platz
-router.post("/seat", async (req, res) => {
+router.post("/seat", authenticateJWT, async (req, res) => {
   try {
     // Suche nach dem aktuell höchsten seatId-Wert
     const lastSeat = await seat.findOne().sort("-seatId").exec();
@@ -206,7 +207,7 @@ router.post("/seat", async (req, res) => {
 });
 
 // UPDATE-Anfrage für einen Platz
-router.put("/seat/:seatId", async (req, res) => {
+router.put("/seat/:seatId", authenticateJWT, async (req, res) => {
   try {
     const seatId = parseInt(req.params.seatId, 10);
     const updatedCoordinates = req.body.coordinates || {}; // erwartet ein Objekt { x: value, y: value }

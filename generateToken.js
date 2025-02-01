@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
+require('dotenv').config();
 
 router.get('/generate-token', (req, res) => {
 
@@ -8,12 +9,11 @@ router.get('/generate-token', (req, res) => {
         console.log('Generating token...');  // Log Aufruf der Token-Erzeugung
 
         const payload = {
-            username: 'testuser', // Beispielnutzer*innendaten
+            username: 'genericUser', // Beispielnutzer*innendaten
         };
 
-        const secret = 'yourjwtsecret';
         const options = { expiresIn: '1h' };
-        const token = jwt.sign(payload, secret, options);
+        const token = jwt.sign(payload, process.env.SECRET_KEY, options);
 
         console.log("Token generated:", token); // Log des generierten Tokens
 

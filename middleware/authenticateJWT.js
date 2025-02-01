@@ -4,28 +4,28 @@ const authenticateJWT = (req, res, next) => {
 
     console.log("Executing JWT middleware");  // Log zu Beginn der Middleware
 
-    const token = req.header('Authorization')?.split(' ')[1];
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
 
     console.log("Token received:", token); // Log Token-Empfang
 
-    if (!token){
+    if (token == null){
         console.warn('Access Denied - No Token');
-        return res.status(401).send('Access Denied');
+        return res.status(401).send('Access Denied - no token available');
     }
 
     try {
-        const secret = 'yourjwtsecret'; // Geheimpunkt, um Token zu verschlüsseln/verifizieren
-        const verified = jwt.verify(token, secret);
+        const verified = jwt.verify(token, process.env.SECRET_KEY);
 
         console.log("Token verified:", verified); // Log bei erfolgreiche Verifizierung
 
         req.user = verified;
-        next();
+        next(); // Token ist gültig
     } catch (err) {
 
         console.error("Token verification failed:", err.message); // Log Verifizierungsfehler
 
-        res.status(400).send('Invalid Token');
+        res.status(403).send('Invalid Token'); // Token ist ungültig
     }
 };
 
