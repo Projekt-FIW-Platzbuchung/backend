@@ -23,15 +23,7 @@ beforeAll(async () => {
 
   await dummySeat.save();
 
-  const dummyBooking = new Booking({
-    userId: 1,
-    username: 'Test User',
-    seatId: 1,
-    date: '2025-01-01',
-    coordinates: { x: 10, y: 20 }
-  });
-
-  await dummyBooking.save();
+  
 });
 
 afterAll(async () => {
