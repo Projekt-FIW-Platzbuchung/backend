@@ -159,6 +159,51 @@ router.get("/seat/:seatId", async (req, res) => {
 });
 
 // DELETE-Anfrage für einen nicht mehr benötigten Platz
+/**
+ * @swagger
+ * /seat/{seatId}:
+ *   delete:
+ *     summary: Delete a seat and its associated bookings
+ *     parameters:
+ *       - in: path
+ *         name: seatId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the seat to delete.
+ *     responses:
+ *       200:
+ *         description: Seat deleted successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 seatId:
+ *                   type: integer
+ *       404:
+ *         description: Seat not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Internal Server Error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                 details:
+ *                   type: string
+ */
 router.delete("/seat/:seatId", async (req, res) => {
   try {
     const seatId = parseInt(req.params.seatId, 10); // Konvertiert seatId zu einer Zahl
