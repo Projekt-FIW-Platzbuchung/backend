@@ -11,6 +11,7 @@ beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
   const uri = mongoServer.getUri(); // es nimmt diese uri:  mongodb://127.0.0.1:38553/
 
+  await mongoose.disconnect();
   await mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
