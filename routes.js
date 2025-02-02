@@ -8,6 +8,10 @@ const authenticateJWT = require('./middleware/authenticateJWT');
 
 const { bookingInformationByDate } = require("./helpers_database_requests.js");
 
+router.get("/protected-resource", authenticateJWT, (req, res) => {
+  res.send('This is a protected resource your token has accessed.');
+});
+
 // eine GET-Anfrage alle seats
 router.get("/seat", authenticateJWT, async (req, res) => {
   try {

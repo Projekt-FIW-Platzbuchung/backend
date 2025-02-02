@@ -12,10 +12,14 @@ const authenticateJWT = require('./middleware/authenticateJWT');
 const generateTokenRoute = require('./generateToken');
 
 app.use(express.json());
-app.use(cors());
+//app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:4200', // Passen Sie die Quelle entsprechend Ihrer Entw.-Umgebung an
+    credentials: true // falls nötig
+}));
 console.log('Setting up routes');  // Log zur Bestätigung der Routeninitialisierung
 
-app.use('/api', routes);
+app.use('/', routes);
 
 
 // Verwendet die Middleware auf den gewünschten Routen
@@ -26,9 +30,9 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/api', generateTokenRoute); 
+app.use('/', generateTokenRoute); 
 
-app.get('/api/protected-route', authenticateJWT, (req, res) => {
+app.get('/protected-route', authenticateJWT, (req, res) => {
     console.log('Accessing protected route');  // Log bei Zugriff auf die geschützte Route
 
     res.send('This is a protected route accessible only with a valid token');
