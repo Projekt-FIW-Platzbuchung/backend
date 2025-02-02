@@ -17,15 +17,17 @@ beforeAll(async () => {
     useUnifiedTopology: true,
   });
 
-  // Erstelle Dummy-Daten mit korrekten Feldnamen
+  
   await Seat.insertMany([
     {
       seatId: 1,
       properties: { Table: "Tisch A1", Monitor: "24 Zoll", WindowSeat: "Ja" },
+      coordinates: { x: 10, y: 20 }
     },
     {
       seatId: 2,
       properties: { Table: "Tisch H1", Monitor: "32 Zoll", WindowSeat: "Nein" },
+      coordinates: { x: 15, y: 25 }
     },
   ]);
 
@@ -34,7 +36,8 @@ beforeAll(async () => {
 
   await Booking.insertMany([
 
-    { seatId: 1, date: "2024-10-10", userId: 1, username: "Alice" },
+    { seatId: 1, date: "2024-10-01", userId: 1},
+    { seatId: 2, date: "2024-10-01", userId: 2},
   ]);
 });
 
@@ -46,11 +49,13 @@ afterAll(async () => {
 
 describe("bookingInformationByDate", () => {
   it("should return the correct booking information for a given date", async () => {
-    const date = "2024-10-10";
+    const date = "2024-10-01";
     const results = await bookingInformationByDate(date);
 
     // Erwartung: nach aggregation 2 seats mit booking Data
     expect(results).toHaveLength(2);
+    expect(result).toBeInstanceOf(Array);
+
 
     const bookedSeat = results.find((result) => result.seatId === 1);
     console.log("booked seat: ", bookedSeat)

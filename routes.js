@@ -30,28 +30,25 @@ router.post("/booking", async (req, res) => {
       coordinates: req.body.coordinates
     };
 
-    try {
+    
       const newBooking = new bookings(bookingsData);
       const savedBooking = await newBooking.save();
       res.status(201).send(savedBooking);
-    } catch (error) {
-      console.log(error);
-      res.status(500).send("Fehler beim Speichern der Buchung");
     }
-  } catch (error) {
-    if (
-      error.message.includes(
-        "Dieser Sitzplatz ist an dem gewählten Datum bereits gebucht"
-      )
-    ) {
-      res.status(400).send({ error: error.message });
-    } else {
-      res
-        .status(500)
-        .send({ error: "Ein unerwarteter Fehler ist aufgetreten." });
+    
+    catch (error) {
+      console.log(error);
+      if (error.message.includes("Dieser Sitzplatz ist an dem gewählten Datum bereits gebucht")) {
+        res.status(400).send({ error: "Dieser Sitzplatz ist an dem gewählten Datum bereits gebucht." });
+      } else if (error.message.includes("Der Sitzplatz wurde nicht gefunden")) {
+        res.status(400).send({ error: "Der Sitzplatz wurde nicht gefunden." });
+      } else {
+        res.status(500).send({ error: "Ein unerwarteter Fehler ist aufgetreten." });
+      }
     }
   }
-});
+);  
+
 
 // GET-anfrage für alle bookings an einem datum
 router.get("/date", async (req, res) => {
