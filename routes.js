@@ -13,6 +13,18 @@ router.get("/protected-resource", authenticateJWT, (req, res) => {
 });
 
 // eine GET-Anfrage alle seats
+/**
+ * @swagger
+ * /seat:
+ *   get:
+ *     summary: Retrieve all seats
+ *     description: Fetch all available seats from the database.
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the seats.
+ *       500:
+ *         description: Internal server error.
+ */
 router.get("/seat", authenticateJWT, async (req, res) => {
   try {
     const allSeats = await seat.find();
@@ -23,6 +35,57 @@ router.get("/seat", authenticateJWT, async (req, res) => {
 });
 
 //POST-Anfrage für ein neues booking
+/**
+ * @swagger
+ * /booking:
+ *   post:
+ *     summary: Create a new booking
+ *     description: |
+ *       Create a booking for a user with a specified seat and date. Validates that:
+ *         - The seat is not already booked for the specified date.
+ *         - The seat exists in the `seat` collection.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: integer
+ *                 example: 123
+ *                 description: The ID of the user creating the booking. References the `user` collection.
+ *               username:
+ *                 type: string
+ *                 example: "John Doe"
+ *                 description: The name of the user.
+ *               seatId:
+ *                 type: integer
+ *                 example: 1
+ *                 description: The ID of the seat to book. References the `seat` collection.
+ *               date:
+ *                 type: string
+ *                 format: date
+ *                 example: "2023-01-01"
+ *                 description: The date for which the seat is being booked.
+ *               coordinates:
+ *                 type: object
+ *                 properties:
+ *                   x:
+ *                     type: number
+ *                     example: 5.3
+ *                   y:
+ *                     type: number
+ *                     example: 7.2
+ *                 description: Coordinates of the seat.
+ *     responses:
+ *       201:
+ *         description: Successfully created the booking.
+ *       400:
+ *         description: Invalid input or seat already booked.
+ *       500:
+ *         description: Internal server error.
+ */
 router.post("/booking", authenticateJWT, async (req, res) => {
   try {
     const formattedDate = moment(req.body.date).format("YYYY-MM-DD");
@@ -58,6 +121,26 @@ router.post("/booking", authenticateJWT, async (req, res) => {
 });
 
 // GET-anfrage für alle bookings an einem datum
+/**
+ * @swagger
+ * /date:
+ *   get:
+ *     summary: Retrieve all bookings for a specific date
+ *     description: Fetches all bookings that exist on a given date.
+ *     parameters:
+ *       - in: query
+ *         name: date
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: The date in format YYYY-MM-DD
+ *     responses:
+ *       200:
+ *         description: A list of bookings for the specified date.
+ *       500:
+ *         description: Server error.
+ */
 router.get("/date", authenticateJWT, async (req, res) => {
   try {
     const oneDate = await bookings.find({
@@ -72,6 +155,26 @@ router.get("/date", authenticateJWT, async (req, res) => {
 });
 
 // GET-Anfrage für den Buchungsstatus aller Plätze an einem Datum
+/**
+ * @swagger
+ * /bookingstatus:
+ *   get:
+ *     summary: Retrieve booking status of all seats for a specific date
+ *     description: Returns an aggregation of booking statuses for all seats on a given date.
+ *     parameters:
+ *       - in: query
+ *         name: date
+ *         required: false
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: The date for which booking status should be checked. Defaults to today's date if not provided.
+ *     responses:
+ *       200:
+ *         description: Booking status of all seats.
+ *       500:
+ *         description: Server error.
+ */
 router.get("/bookingstatus", authenticateJWT, async (req, res) => {
   try {
     // Holt das Datum aus den Abfrageparametern
@@ -96,6 +199,36 @@ router.get("/bookingstatus", authenticateJWT, async (req, res) => {
 });
 
 // GET-Anfrage für die Details einer Buchung für Seat und Datum
+/**
+ * @swagger
+ * /bookingdetails:
+ *   get:
+ *     summary: Get booking details for a specific seat on a given date
+ *     description: Fetches booking information, including the username, for a particular seat on a specified date.
+ *     parameters:
+ *       - in: query
+ *         name: seatId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the seat.
+ *       - in: query
+ *         name: date
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: The booking date.
+ *     responses:
+ *       200:
+ *         description: Booking details for the seat.
+ *       400:
+ *         description: Missing seatId or date.
+ *       404:
+ *         description: No booking found.
+ *       500:
+ *         description: Server error.
+ */
 router.get('/bookingdetails', authenticateJWT, async (req, res) => {
   try {
     // Extract seatId and date from query parameters
@@ -125,6 +258,24 @@ router.get('/bookingdetails', authenticateJWT, async (req, res) => {
 }); 
 
 // DELETE-Anfrage für eine Buchung
+/**
+ * @swagger
+ * /bookings/{id}:
+ *   delete:
+ *     summary: Delete a booking by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the booking to delete.
+ *     responses:
+ *       204:
+ *         description: Booking deleted successfully.
+ *       404:
+ *         description: Booking not found.
+ */
 router.delete("/bookings/:id", authenticateJWT, async (req, res) => {
   try {
     await bookings.deleteOne({ _id: req.params.id });
@@ -136,6 +287,24 @@ router.delete("/bookings/:id", authenticateJWT, async (req, res) => {
 });
 
 //GET-Anfrage Bookings für bestimmten User
+/**
+ * @swagger
+ * /bookings/user/{userId}:
+ *   get:
+ *     summary: Get all bookings for a specific user
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: User ID whose bookings need to be retrieved.
+ *     responses:
+ *       200:
+ *         description: List of bookings for the user.
+ *       500:
+ *         description: Server error.
+ */
 router.get("/bookings/user/:userId", authenticateJWT, async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -147,6 +316,24 @@ router.get("/bookings/user/:userId", authenticateJWT, async (req, res) => {
 });
 
 // Get-Anfrage für einen Platz
+/**
+ * @swagger
+ * /seat/{seatId}:
+ *   get:
+ *     summary: Retrieve details of a specific seat
+ *     parameters:
+ *       - in: path
+ *         name: seatId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the seat.
+ *     responses:
+ *       200:
+ *         description: Seat details.
+ *       404:
+ *         description: Seat not found.
+ */
 router.get("/seat/:seatId", authenticateJWT, async (req, res) => {
   try {
     const seatId = parseInt(req.params.seatId, 10); // Konvertiert seatId zu einer Zahl
@@ -163,6 +350,24 @@ router.get("/seat/:seatId", authenticateJWT, async (req, res) => {
 });
 
 // DELETE-Anfrage für einen nicht mehr benötigten Platz
+/**
+ * @swagger
+ * /seat/{seatId}:
+ *   delete:
+ *     summary: Delete a seat
+ *     parameters:
+ *       - in: path
+ *         name: seatId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the seat to delete.
+ *     responses:
+ *       200:
+ *         description: Seat deleted successfully.
+ *       404:
+ *         description: Seat not found.
+ */
 router.delete("/seat/:seatId", authenticateJWT, async (req, res) => {
   try {
     const seatId = parseInt(req.params.seatId, 10); // Konvertiert seatId zu einer Zahl
@@ -184,6 +389,17 @@ router.delete("/seat/:seatId", authenticateJWT, async (req, res) => {
 });
 
 // POST-Anfrage für einen neuen Platz
+/**
+ * @swagger
+ * /seat:
+ *   post:
+ *     summary: Create a new seat
+ *     responses:
+ *       201:
+ *         description: Seat created successfully.
+ *       500:
+ *         description: Error occurred during seat creation.
+ */
 router.post("/seat", authenticateJWT, async (req, res) => {
   try {
     const seats = await seat.find().sort("seatId").exec();
@@ -213,6 +429,17 @@ router.post("/seat", authenticateJWT, async (req, res) => {
 });
 
 // UPDATE-Anfrage für einen Platz
+/**
+ * @swagger
+ * /seat/{seatId}:
+ *   put:
+ *     summary: Update a seat's coordinates or properties
+ *     responses:
+ *       200:
+ *         description: Seat updated successfully.
+ *       404:
+ *         description: Seat not found.
+ */
 router.put("/seat/:seatId", authenticateJWT, async (req, res) => {
   try {
     const seatId = parseInt(req.params.seatId, 10);

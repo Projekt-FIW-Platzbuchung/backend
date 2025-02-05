@@ -17,6 +17,8 @@ npm install moment
 npm install --save-dev jest
 npm install --save-dev supertest
 npm install node-cron
+npm install swagger-jsdoc swagger-ui-express
+
 npm install jsonwebtoken
 ```
 - Build and run the project
@@ -30,3 +32,10 @@ npm start
 ```
 npm test
 ```
+# Swagger API Documentation
+start the backend with 
+```
+npm run start
+```
+Navigate to `http://localhost:4000/api-docs`
+
