@@ -7,6 +7,9 @@ require('./tasks/cronjob_delete_old_bookings');
 
 const app = express();
 const PORT = process.env.PORT
+const swaggerSetup = require("./doku/swagger/swagger");
+swaggerSetup(app);
+
 
 app.use(express.json());
 app.use(cors());
