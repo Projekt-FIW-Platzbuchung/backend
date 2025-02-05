@@ -351,6 +351,10 @@ router.get("/seat/:seatId", async (req, res) => {
  * /seat/{seatId}:
  *   delete:
  *     summary: Delete a seat and its associated bookings
+ *     description: This endpoint deletes a seat by its ID and removes all bookings associated with this seat.
+ *     tags:
+ *       - Seats
+ *     x-note: Uses the `deleteOneSeat` helper function from `services/seatService`.
  *     parameters:
  *       - in: path
  *         name: seatId
@@ -360,7 +364,7 @@ router.get("/seat/:seatId", async (req, res) => {
  *         description: ID of the seat to delete.
  *     responses:
  *       200:
- *         description: Seat deleted successfully.
+ *         description: Successfully deleted the seat and its bookings.
  *         content:
  *           application/json:
  *             schema:
