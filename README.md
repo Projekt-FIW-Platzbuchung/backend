@@ -48,6 +48,6 @@ SECRET_KEY=DasIstSecretKeyDotEnv
 ```
 GET localhost:4000/generate-token
 ```
-- Copy the Token and paste it in the SWAGGER UI Authorize Field and click close afterwards
+- Copy the Token and paste it into the SWAGGER UI Authorize Field and click close afterwards
 - Now you can Try out the Endpoints
 
