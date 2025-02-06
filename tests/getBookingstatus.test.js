@@ -64,7 +64,7 @@ describe("bookingInformationByDate", () => {
     expect(bookedSeat).toMatchObject({
       seatId: 1,
       properties: { Table: "Tisch A1", Monitor: "24 Zoll", WindowSeat: "Ja" },
-      bookingDetails: { userId: 1, date: "2024-10-10", username: "Alice" },
+      bookingDetails: { userId: 1, date: "2024-10-01", username: "Alice" },
       status: "gebucht",
     });
 
