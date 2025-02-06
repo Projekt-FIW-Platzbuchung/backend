@@ -135,6 +135,8 @@ router.post("/booking", authenticateJWT, async (req, res) => {
  *   get:
  *     summary: Retrieve all bookings for a specific date
  *     description: Fetches all bookings that exist on a given date.
+ *     tags:
+ *       - bookings
  *     security:
  *        - bearerAuth: []
  *     parameters:
