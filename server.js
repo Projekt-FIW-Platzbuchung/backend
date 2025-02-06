@@ -17,7 +17,7 @@ const generateTokenRoute = require('./generateToken');
 app.use(express.json());
 //app.use(cors());
 app.use(cors({
-    origin: 'http://localhost:4200', // Passen Sie die Quelle entsprechend Ihrer Entw.-Umgebung an
+    origin: 'http://localhost:4200', // Quelle entsprechend der Entw.-Umgebung anpassen
     credentials: true // falls nötig
 }));
 console.log('Setting up routes');  // Log zur Bestätigung der Routeninitialisierung
