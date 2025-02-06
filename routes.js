@@ -42,6 +42,8 @@ router.get("/seat", async (req, res) => {
  *       Create a booking for a user with a specified seat and date. Validates that:
  *         - The seat is not already booked for the specified date.
  *         - The seat exists in the `seat` collection.
+ *     tags:
+ *       - bookings
  *     requestBody:
  *       required: true
  *       content:
@@ -159,6 +161,8 @@ router.get("/date", async (req, res) => {
  *   get:
  *     summary: Retrieve booking status of all seats for a specific date
  *     description: Returns an aggregation of booking statuses for all seats on a given date.
+ *     tags:
+ *       - bookings
  *     parameters:
  *       - in: query
  *         name: date
@@ -203,6 +207,8 @@ router.get("/bookingstatus", async (req, res) => {
  *   get:
  *     summary: Get booking details for a specific seat on a given date
  *     description: Fetches booking information, including the username, for a particular seat on a specified date.
+ *     tags:
+ *       - bookings
  *     parameters:
  *       - in: query
  *         name: seatId
@@ -261,6 +267,8 @@ router.get('/bookingdetails', async (req, res) => {
  * /bookings/{id}:
  *   delete:
  *     summary: Delete a booking by ID
+ *     tags:
+ *       - bookings
  *     parameters:
  *       - in: path
  *         name: id
@@ -290,6 +298,8 @@ router.delete("/bookings/:id", async (req, res) => {
  * /bookings/user/{userId}:
  *   get:
  *     summary: Get all bookings for a specific user
+ *     tags:
+ *       - bookings
  *     parameters:
  *       - in: path
  *         name: userId
