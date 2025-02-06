@@ -17,8 +17,9 @@ npm install moment
 npm install --save-dev jest
 npm install --save-dev supertest
 npm install node-cron
-npm install swagger-jsdoc swagger-ui-express
+npm install --save swagger-jsdoc swagger-ui-express
 
+npm install --save jsonwebtoken
 ```
 - Build and run the project
 ```

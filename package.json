@@ -14,12 +14,15 @@
   "author": "CS",
   "license": "ISC",
   "dependencies": {
+    "-": "^0.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
     "moment": "^2.30.1",
     "mongoose": "^8.7.2",
     "node-cron": "^3.0.3",
+    "save": "^2.9.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   },
