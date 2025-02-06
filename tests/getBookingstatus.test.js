@@ -20,24 +20,24 @@ beforeAll(async () => {
   
   await Seat.insertMany([
     {
-      seatId: 1,
+      seatId: 3000,
       properties: { Table: "Tisch A1", Monitor: "24 Zoll", WindowSeat: "Ja" },
-      coordinates: { x: 10, y: 20 }
+      coordinates: { x: 10, y: 20 }, status: "gebucht"
     },
     {
-      seatId: 2,
+      seatId: 3001,
       properties: { Table: "Tisch H1", Monitor: "32 Zoll", WindowSeat: "Nein" },
-      coordinates: { x: 15, y: 25 }
+      coordinates: { x: 15, y: 25 }, status: "gebucht"
     },
   ]);
 
-  console.log("seat to be booked :", await Seat.find({seatId: 1}));
-  console.log("seat to be free : ", await Seat.find({seatId: 2}) );
+  console.log("seat to be booked :", await Seat.find({seatId: 3000}));
+  console.log("seat to be free : ", await Seat.find({seatId: 3001}) );
 
   await Booking.insertMany([
 
-    { seatId: 1, date: "2024-10-01", userId: 1},
-    { seatId: 2, date: "2024-10-01", userId: 2},
+    { userId: 1,username: "Alice",seatId: 3000, date: "2026-10-10", coordinates: { x: 10, y: 20 }},
+    { userId: 2,username: "Bob", seatId: 3001, date: "2026-10-10", coordinates: { x: 15, y: 25 }}, 
   ]);
 });
 
@@ -49,23 +49,23 @@ afterAll(async () => {
 
 describe("bookingInformationByDate", () => {
   it("should return the correct booking information for a given date", async () => {
-    const date = "2024-10-01";
+    const date = "2026-10-10";
     const results = await bookingInformationByDate(date);
 
     // Erwartung: nach aggregation 2 seats mit booking Data
     expect(results).toHaveLength(2);
-    expect(result).toBeInstanceOf(Array);
+    expect(results).toBeInstanceOf(Array);
 
 
-    const bookedSeat = results.find((result) => result.seatId === 1);
+    const bookedSeat = results.find((result) => result.seatId === 3001);
     console.log("booked seat: ", bookedSeat)
 
     // Erwartung: Seat 1 gebucht mit bookingDetails
     expect(bookedSeat).toMatchObject({
-      seatId: 1,
+      seatId: 3000,
       properties: { Table: "Tisch A1", Monitor: "24 Zoll", WindowSeat: "Ja" },
-      bookingDetails: { userId: 1, date: "2024-10-01", username: "Alice" },
-      status: "gebucht",
+      bookingDetails: { userId: 1, date: "2026-10-10", username: "Alice" },
+      status: "frei",
     });
 
     const freeSeat = results.find((result) => result.seatId === 2);
@@ -73,9 +73,9 @@ describe("bookingInformationByDate", () => {
 
     // Erwartung: Seat 2 frei ohne bookingDetails
     expect(freeSeat).toMatchObject( {
-      seatId: 2,
+      seatId: 3001,
       properties: { Table: 'Tisch H1', Monitor: '32 Zoll', WindowSeat: 'Nein' },
-      status: 'frei'
+      status: 'gebucht'
     });
   });
 });
