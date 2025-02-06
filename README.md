@@ -29,7 +29,7 @@ npm start
 # Test
 - run the Test environment 
 ```
-npm test
+npm run test -- --silent 
 ```
 # Swagger API Documentation
 - start the backend with 
