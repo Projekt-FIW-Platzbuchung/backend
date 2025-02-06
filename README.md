@@ -32,21 +32,22 @@ npm start
 npm test
 ```
 # Swagger API Documentation
-start the backend with 
+- start the backend with 
 ```
 npm run start
 ```
 Navigate to `http://localhost:4000/api-docs`
 
-Click on Authorize 
+- Click on Authorize 
 
-In VSC put in your .env file 
+- In VSC put in your .env file 
 ```
 SECRET_KEY=DasIstSecretKeyDotEnv
 ```
-Go to Postman and Send following Request:
+- Go to Postman and Send following Request:
 ```
 GET localhost:4000/generate-token
 ```
-Copy the Token and paste it in the SWAGGER UI Authorize Field
+- Copy the Token and paste it in the SWAGGER UI Authorize Field and click close afterwards
+- Now you can Try out the Endpoints
 
