@@ -57,24 +57,25 @@ describe("bookingInformationByDate", () => {
     expect(results).toBeInstanceOf(Array);
 
 
-    const bookedSeat = results.find((result) => result.seatId === 3001);
-    console.log("booked seat: ", bookedSeat)
+    const bookedSeatAlice = results.find((result) => result.seatId === 3000);
+    console.log("booked seat: ", bookedSeatAlice)
 
     // Erwartung: Seat 1 gebucht mit bookingDetails
-    expect(bookedSeat).toMatchObject({
+    expect(bookedSeatAlice).toMatchObject({
       seatId: 3000,
       properties: { Table: "Tisch A1", Monitor: "24 Zoll", WindowSeat: "Ja" },
       bookingDetails: { userId: 1, date: "2026-10-10", username: "Alice" },
-      status: "frei",
+      status: "gebucht",
     });
 
-    const freeSeat = results.find((result) => result.seatId === 2);
-    console.log("free seat: ", freeSeat)
+    const bookedSeatBob = results.find((result) => result.seatId === 3001);
+    console.log("free seat: ", bookedSeatBob)
 
     // Erwartung: Seat 2 frei ohne bookingDetails
-    expect(freeSeat).toMatchObject( {
+    expect(bookedSeatBob).toMatchObject( {
       seatId: 3001,
       properties: { Table: 'Tisch H1', Monitor: '32 Zoll', WindowSeat: 'Nein' },
+      bookingDetails: { userId: 2, date: "2026-10-10", username: "Bob" },
       status: 'gebucht'
     });
   });
