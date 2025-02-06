@@ -15,6 +15,8 @@ const { bookingInformationByDate } = require("./helpers_database_requests.js");
  *   get:
  *     summary: Retrieve all seats
  *     description: Fetch all available seats from the database.
+ *     tags:
+ *       - seats
  *     responses:
  *       200:
  *         description: Successfully retrieved the seats.
@@ -317,6 +319,8 @@ router.get("/bookings/user/:userId", async (req, res) => {
  * /seat/{seatId}:
  *   get:
  *     summary: Retrieve details of a specific seat
+ *     tags:
+ *       - seats
  *     parameters:
  *       - in: path
  *         name: seatId
@@ -353,7 +357,7 @@ router.get("/seat/:seatId", async (req, res) => {
  *     summary: Delete a seat and its associated bookings
  *     description: This endpoint deletes a seat by its ID and removes all bookings associated with this seat.
  *     tags:
- *       - Seats
+ *       - seats
  *     x-note: Uses the `deleteOneSeat` helper function from `services/seatService`.
  *     parameters:
  *       - in: path
@@ -421,6 +425,8 @@ router.delete("/seat/:seatId", async (req, res) => {
  * /seat:
  *   post:
  *     summary: Create a new seat
+ *     tags:
+ *       - seats
  *     responses:
  *       201:
  *         description: Seat created successfully.
@@ -461,6 +467,8 @@ router.post("/seat", async (req, res) => {
  * /seat/{seatId}:
  *   put:
  *     summary: Update a seat's coordinates or properties
+ *     tags:
+ *       - seats
  *     responses:
  *       200:
  *         description: Seat updated successfully.
