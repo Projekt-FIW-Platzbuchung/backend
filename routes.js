@@ -19,6 +19,10 @@ router.get("/protected-resource", authenticateJWT, (req, res) => {
  *   get:
  *     summary: Retrieve all seats
  *     description: Fetch all available seats from the database.
+ *     tags:
+ *       - seats
+ *     security:
+ *        - bearerAuth: []
  *     responses:
  *       200:
  *         description: Successfully retrieved the seats.
@@ -44,6 +48,10 @@ router.get("/seat", authenticateJWT, async (req, res) => {
  *       Create a booking for a user with a specified seat and date. Validates that:
  *         - The seat is not already booked for the specified date.
  *         - The seat exists in the `seat` collection.
+ *     tags:
+ *       - bookings
+ *     security:
+ *        - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -127,6 +135,8 @@ router.post("/booking", authenticateJWT, async (req, res) => {
  *   get:
  *     summary: Retrieve all bookings for a specific date
  *     description: Fetches all bookings that exist on a given date.
+ *     security:
+ *        - bearerAuth: []
  *     parameters:
  *       - in: query
  *         name: date
@@ -161,6 +171,10 @@ router.get("/date", authenticateJWT, async (req, res) => {
  *   get:
  *     summary: Retrieve booking status of all seats for a specific date
  *     description: Returns an aggregation of booking statuses for all seats on a given date.
+ *     tags:
+ *       - bookings
+ *     security:
+ *        - bearerAuth: []
  *     parameters:
  *       - in: query
  *         name: date
@@ -205,6 +219,10 @@ router.get("/bookingstatus", authenticateJWT, async (req, res) => {
  *   get:
  *     summary: Get booking details for a specific seat on a given date
  *     description: Fetches booking information, including the username, for a particular seat on a specified date.
+ *     tags:
+ *       - bookings
+ *     security:
+ *        - bearerAuth: []
  *     parameters:
  *       - in: query
  *         name: seatId
@@ -263,6 +281,10 @@ router.get('/bookingdetails', authenticateJWT, async (req, res) => {
  * /bookings/{id}:
  *   delete:
  *     summary: Delete a booking by ID
+ *     tags:
+ *       - bookings
+ *     security:
+ *        - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -292,6 +314,10 @@ router.delete("/bookings/:id", authenticateJWT, async (req, res) => {
  * /bookings/user/{userId}:
  *   get:
  *     summary: Get all bookings for a specific user
+ *     tags:
+ *       - bookings
+ *     security:
+ *        - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: userId
@@ -321,6 +347,10 @@ router.get("/bookings/user/:userId", authenticateJWT, async (req, res) => {
  * /seat/{seatId}:
  *   get:
  *     summary: Retrieve details of a specific seat
+ *     tags:
+ *       - seats
+ *     security:
+ *        - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: seatId
@@ -354,7 +384,13 @@ router.get("/seat/:seatId", authenticateJWT, async (req, res) => {
  * @swagger
  * /seat/{seatId}:
  *   delete:
- *     summary: Delete a seat
+ *     summary: Delete a seat and its associated bookings
+ *     description: This endpoint deletes a seat by its ID and removes all bookings associated with this seat.
+ *     tags:
+ *       - seats
+ *     security:
+ *        - bearerAuth: []
+ *     x-note: Uses the `deleteOneSeat` helper function from `services/seatService`.
  *     parameters:
  *       - in: path
  *         name: seatId
@@ -364,9 +400,36 @@ router.get("/seat/:seatId", authenticateJWT, async (req, res) => {
  *         description: ID of the seat to delete.
  *     responses:
  *       200:
- *         description: Seat deleted successfully.
+ *         description: Successfully deleted the seat and its bookings.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 seatId:
+ *                   type: integer
  *       404:
  *         description: Seat not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Internal Server Error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                 details:
+ *                   type: string
  */
 router.delete("/seat/:seatId", authenticateJWT, async (req, res) => {
   try {
@@ -394,6 +457,10 @@ router.delete("/seat/:seatId", authenticateJWT, async (req, res) => {
  * /seat:
  *   post:
  *     summary: Create a new seat
+ *     tags:
+ *       - seats
+ *     security:
+ *        - bearerAuth: []
  *     responses:
  *       201:
  *         description: Seat created successfully.
@@ -434,6 +501,10 @@ router.post("/seat", authenticateJWT, async (req, res) => {
  * /seat/{seatId}:
  *   put:
  *     summary: Update a seat's coordinates or properties
+ *     tags:
+ *       - seats
+ *     security:
+ *        - bearerAuth: []
  *     responses:
  *       200:
  *         description: Seat updated successfully.

@@ -18,7 +18,6 @@ npm install --save-dev jest
 npm install --save-dev supertest
 npm install node-cron
 npm install --save swagger-jsdoc swagger-ui-express
-
 npm install --save jsonwebtoken
 ```
 - Build and run the project
@@ -38,4 +37,16 @@ start the backend with
 npm run start
 ```
 Navigate to `http://localhost:4000/api-docs`
+
+Click on Authorize 
+
+In VSC put in your .env file 
+```
+SECRET_KEY=DasIstSecretKeyDotEnv
+```
+Go to Postman and Send following Request:
+```
+GET localhost:4000/generate-token
+```
+Copy the Token and paste it in the SWAGGER UI Authorize Field
 

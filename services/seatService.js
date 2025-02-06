@@ -1,7 +1,20 @@
+/**
+ * @module seatService
+ * @description Service module to handle seat-related operations.
+ */
+
 const Seat = require('../models/seat');
 const bookings = require('../models/bookings');
 const mongoose = require('mongoose');
 
+/**
+ * Deletes a seat and all associated bookings from the database.
+ * @async
+ * @function deleteOneSeat
+ * @param {string} seatId - The ID of the seat to delete.
+ * @returns {Promise<Object>} - The result of the delete operation, including deletedCount.
+ * @throws Will throw an error if the operation fails.
+ */
 async function deleteOneSeat(seatId) {                     
     console.log(`Starting deleteOneSeat with seatId: ${seatId}`);
     console.log(`Seat ID to delete: ${seatId}`);
@@ -39,6 +52,13 @@ async function deleteOneSeat(seatId) {
     }
 }
 
+/**
+ * Finds a seat by its ID.
+ * @async
+ * @function findSeat
+ * @param {string} seatId - The ID of the seat to find.
+ * @returns {Promise<Object|null>} - The seat object if found, or null if not.
+ */
 async function findSeat(seatId) {
     return Seat.findOne({ seatId: seatId }); 
 }
