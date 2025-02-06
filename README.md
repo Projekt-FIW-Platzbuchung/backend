@@ -17,6 +17,8 @@ npm install moment
 npm install --save-dev jest
 npm install --save-dev supertest
 npm install node-cron
+npm install --save swagger-jsdoc swagger-ui-express
+npm install --save jsonwebtoken
 ```
 - Build and run the project
 ```
@@ -27,9 +29,25 @@ npm start
 # Test
 - run the Test environment 
 ```
-npm test
-```
-for shorter output use
-```
 npm run test -- --silent 
 ```
+# Swagger API Documentation
+- start the backend with 
+```
+npm run start
+```
+Navigate to `http://localhost:4000/api-docs`
+
+- Click on Authorize 
+
+- In VSC put in your .env file 
+```
+SECRET_KEY=DasIstSecretKeyDotEnv
+```
+- Go to Postman and Send following Request:
+```
+GET localhost:4000/generate-token
+```
+- Copy the Token and paste it into the SWAGGER UI Authorize Field and click close afterwards
+- Now you can Try out the Endpoints
+
