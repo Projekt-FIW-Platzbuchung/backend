@@ -19,6 +19,7 @@ npm install --save-dev supertest
 npm install node-cron
 npm install --save swagger-jsdoc swagger-ui-express
 
+npm install jsonwebtoken
 ```
 - Build and run the project
 ```
