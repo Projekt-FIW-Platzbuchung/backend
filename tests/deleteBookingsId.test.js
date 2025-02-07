@@ -5,6 +5,7 @@ const app = require('../server'); // Importieren Sie Ihre App-Instanz von Ihrer 
 const Booking = require('../models/bookings');
 
 let mongoServer;
+let token;
 
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
@@ -15,6 +16,9 @@ beforeAll(async () => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
+
+  const response = await request(app).get('/generate-token');
+  token = response.body.token;
 
   await Booking.insertMany([
     { seatId: 1, date: '2024-10-10', userId: 1, username: 'Alice', coordinates: { x: 10, y: 15 } },
@@ -32,9 +36,10 @@ describe("DELETE /bookings/:id", () => {
     const booking = await Booking.findOne({ seatId: 1 });
 
     const response = await request(app)
-      .delete(`/bookings/${booking._id}`)
-      .set('Accept', 'application/json') 
-      .expect(204); 
+    .delete(`/bookings/${booking._id}`)
+    .set('Authorization', `Bearer ${token}`) // Token hinzufügen
+    .set('Accept', 'application/json') 
+    .expect(204); 
 
     
     const deletedBooking = await Booking.findById(booking._id);
@@ -43,9 +48,9 @@ describe("DELETE /bookings/:id", () => {
 
   it("should return 404 for a non-existent booking id", async () => {
     
-    const fakeId = new mongoose.Types.ObjectId();
     const response = await request(app)
       .delete(`/bookings/09349995454444440987645342`) 
+      .set('Authorization', `Bearer ${token}`) 
       .set('Accept', 'application/json') 
       .expect(404); 
 

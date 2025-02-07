@@ -6,6 +6,7 @@ const Booking = require('../models/bookings');
 const Seat = require('../models/seat');
 
 let mongoServer;
+let token;
 
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
@@ -17,6 +18,8 @@ beforeAll(async () => {
     useUnifiedTopology: true,
   });
 
+  const response = await request(app).get('/generate-token');
+  token = response.body.token;
   
   const dummySeat = new Seat({
     seatId: 1,
@@ -48,6 +51,7 @@ describe('POST /booking', () => {
     const response = await request(app)
       .post('/booking')
       .send(newBooking)
+      .set('Authorization', `Bearer ${token}`) 
       .set('Accept', 'application/json')
       .expect(201);
 
@@ -71,6 +75,7 @@ describe('POST /booking', () => {
     const response = await request(app)
       .post('/booking')
       .send(invalidSeatBooking)
+      .set('Authorization', `Bearer ${token}`) 
       .set('Accept', 'application/json')
       .expect(400);
 
@@ -90,6 +95,7 @@ describe('POST /booking', () => {
     await request(app)
       .post('/booking')
       .send(existingBooking)
+      .set('Authorization', `Bearer ${token}`) 
       .set('Accept', 'application/json')
       .expect(201);
 
@@ -97,6 +103,7 @@ describe('POST /booking', () => {
     const response = await request(app)
       .post('/booking')
       .send(existingBooking)
+      .set('Authorization', `Bearer ${token}`) 
       .set('Accept', 'application/json')
       .expect(400);
 
