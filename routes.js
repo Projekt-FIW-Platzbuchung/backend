@@ -570,4 +570,5 @@ router.put("/seat/:seatId", authenticateJWT, async (req, res) => {
   }    
 });
 
+   
 module.exports = router;
