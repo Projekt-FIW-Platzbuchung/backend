@@ -15,10 +15,12 @@ beforeAll(async () => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
+
+  const response = await request(app).get('/generate-token');
+  token = response.body.token;
 });
 
-const response = await request(app).get('/generate-token');
-token = response.body.token;
+
 
 afterAll(async () => {
   await mongoose.disconnect();
