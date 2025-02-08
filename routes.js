@@ -12,7 +12,7 @@ router.get("/protected-resource", authenticateJWT, (req, res) => {
   res.send('This is a protected resource your token has accessed.');
 });
 
-// eine GET-Anfrage alle seats
+
 /**
  * @swagger
  * /seat:
@@ -163,7 +163,7 @@ router.get("/date", authenticateJWT, async (req, res) => {
   }
 });
 
-// GET-Anfrage für den Buchungsstatus aller Plätze an einem Datum
+
 /**
  * @swagger
  * /bookingstatus:
@@ -211,7 +211,7 @@ router.get("/bookingstatus", authenticateJWT, async (req, res) => {
   }
 });
 
-// GET-Anfrage für die Details einer Buchung für Seat und Datum
+
 /**
  * @swagger
  * /bookingdetails:
@@ -274,7 +274,7 @@ router.get('/bookingdetails', authenticateJWT, async (req, res) => {
   }
 }); 
 
-// DELETE-Anfrage für eine Buchung
+
 /**
  * @swagger
  * /bookings/{id}:
@@ -307,7 +307,7 @@ router.delete("/bookings/:id", authenticateJWT, async (req, res) => {
   }
 });
 
-//GET-Anfrage Bookings für bestimmten User
+
 /**
  * @swagger
  * /bookings/user/{userId}:
@@ -340,7 +340,7 @@ router.get("/bookings/user/:userId", authenticateJWT, async (req, res) => {
   }
 });
 
-// Get-Anfrage für einen Platz
+
 /**
  * @swagger
  * /seat/{seatId}:
@@ -378,7 +378,7 @@ router.get("/seat/:seatId", authenticateJWT, async (req, res) => {
   }
 });
 
-// DELETE-Anfrage für einen nicht mehr benötigten Platz
+
 /**
  * @swagger
  * /seat/{seatId}:
@@ -450,7 +450,7 @@ router.delete("/seat/:seatId", authenticateJWT, async (req, res) => {
   }
 });
 
-// POST-Anfrage für einen neuen Platz
+
 /**
  * @swagger
  * /seat:
@@ -501,7 +501,7 @@ router.post("/seat", authenticateJWT, async (req, res) => {
 });
 
 
-// UPDATE-Anfrage für einen Platz
+
 /**
  * @swagger
  * /seat/{seatId}:
