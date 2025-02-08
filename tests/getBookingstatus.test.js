@@ -11,29 +11,33 @@ beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
   const uri = mongoServer.getUri(); // es nimmt diese uri:  mongodb://127.0.0.1:38553/
 
+  await mongoose.disconnect();
   await mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
 
-  // Erstelle Dummy-Daten mit korrekten Feldnamen
+  
   await Seat.insertMany([
     {
-      seatId: 1,
+      seatId: 3000,
       properties: { Table: "Tisch A1", Monitor: "24 Zoll", WindowSeat: "Ja" },
+      coordinates: { x: 10, y: 20 }, status: "gebucht"
     },
     {
-      seatId: 2,
+      seatId: 3001,
       properties: { Table: "Tisch H1", Monitor: "32 Zoll", WindowSeat: "Nein" },
+      coordinates: { x: 15, y: 25 }, status: "gebucht"
     },
   ]);
 
-  console.log("seat to be booked :", await Seat.find({seatId: 1}));
-  console.log("seat to be free : ", await Seat.find({seatId: 2}) );
+  console.log("seat to be booked :", await Seat.find({seatId: 3000}));
+  console.log("seat to be free : ", await Seat.find({seatId: 3001}) );
 
   await Booking.insertMany([
 
-    { seatId: 1, date: "2024-10-10", userId: 1, username: "Alice" },
+    { userId: 1,username: "Alice",seatId: 3000, date: "2026-10-10", coordinates: { x: 10, y: 20 }},
+    { userId: 2,username: "Bob", seatId: 3001, date: "2026-10-10", coordinates: { x: 15, y: 25 }}, 
   ]);
 });
 
@@ -45,31 +49,34 @@ afterAll(async () => {
 
 describe("bookingInformationByDate", () => {
   it("should return the correct booking information for a given date", async () => {
-    const date = "2024-10-10";
+    const date = "2026-10-10";
     const results = await bookingInformationByDate(date);
 
     // Erwartung: nach aggregation 2 seats mit booking Data
     expect(results).toHaveLength(2);
+    expect(results).toBeInstanceOf(Array);
 
-    const bookedSeat = results.find((result) => result.seatId === 1);
-    console.log("booked seat: ", bookedSeat)
+
+    const bookedSeatAlice = results.find((result) => result.seatId === 3000);
+    console.log("booked seat: ", bookedSeatAlice)
 
     // Erwartung: Seat 1 gebucht mit bookingDetails
-    expect(bookedSeat).toMatchObject({
-      seatId: 1,
+    expect(bookedSeatAlice).toMatchObject({
+      seatId: 3000,
       properties: { Table: "Tisch A1", Monitor: "24 Zoll", WindowSeat: "Ja" },
-      bookingDetails: { userId: 1, date: "2024-10-10", username: "Alice" },
+      bookingDetails: { userId: 1, date: "2026-10-10", username: "Alice" },
       status: "gebucht",
     });
 
-    const freeSeat = results.find((result) => result.seatId === 2);
-    console.log("free seat: ", freeSeat)
+    const bookedSeatBob = results.find((result) => result.seatId === 3001);
+    console.log("free seat: ", bookedSeatBob)
 
     // Erwartung: Seat 2 frei ohne bookingDetails
-    expect(freeSeat).toMatchObject( {
-      seatId: 2,
+    expect(bookedSeatBob).toMatchObject( {
+      seatId: 3001,
       properties: { Table: 'Tisch H1', Monitor: '32 Zoll', WindowSeat: 'Nein' },
-      status: 'frei'
+      bookingDetails: { userId: 2, date: "2026-10-10", username: "Bob" },
+      status: 'gebucht'
     });
   });
 });
