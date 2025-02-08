@@ -472,27 +472,34 @@ router.post("/seat", authenticateJWT, async (req, res) => {
     let newSeatId = 1;
 
     for (let i = 0; i < seats.length; i++) {
-      if (seats[i].seatId !== i+1 ) {
-        newSeatId = i+1;
+      if (seats[i].seatId !== i + 1) {
+        newSeatId = i + 1;
         break;
       }
       newSeatId = i + 2;
     }
-  
 
     const properties = req.body.properties || {};
     const coordinates = req.body.coordinates;
     const seatData = { seatId: newSeatId, properties: properties, coordinates: coordinates };
+
     const newSeat = new seat(seatData);
     const savedSeat = await newSeat.save();
     console.log("Saved Seat:", savedSeat);
 
     res.status(201).json(savedSeat);
-    } catch (err) {
+  } catch (err) {
+    if (err.name === 'ValidationError') {
+      // Catch validation errors and return a 400 status code
+      console.log("Validation Error:", err.message);
+      return res.status(400).json({ error: 'Invalid seat data' });
+    }
+
     console.log("Error during seat creation:", err);
     res.status(500).send("Fehler beim Speichern des neuen Platzes");
   }
 });
+
 
 // UPDATE-Anfrage für einen Platz
 /**
