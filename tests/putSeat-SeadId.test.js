@@ -1,9 +1,9 @@
 const request = require('supertest');
 const { expect } = require('@jest/globals');
 
-const baseUrl = "http://localhost:4000"; // Base URL for your server
+const baseUrl = "http://localhost:4000"; 
 
-// Mock data for updating a seat
+
 const mockUpdateData = {
     coordinates: { x: 200, y: 150 },
     properties: { hasPowerOutlet: true, isNearWindow: false },
@@ -14,12 +14,12 @@ describe("PUT /seat/:seatId endpoint", () => {
     it("should update seat details for a valid seatId and return status 200", async () => {
         try {
             const response = await request(baseUrl)
-                .put('/seat/1') // Send PUT request to update seat with seatId 1
-                .send(mockUpdateData) // Send mock update data in request body
-                .expect(200); // Expect status code 200
+                .put('/seat/1') 
+                .send(mockUpdateData) 
+                .expect(200); 
 
-            // Assertions
-            expect(response.body).toBeInstanceOf(Object); // Response should be an object
+            
+            expect(response.body).toBeInstanceOf(Object); 
             expect(response.body.updatedSeat).toHaveProperty("coordinates");
             expect(response.body.updatedSeat.coordinates).toEqual(mockUpdateData.coordinates);
             expect(response.body.updatedSeat.properties).toMatchObject(mockUpdateData.properties);
@@ -31,11 +31,11 @@ describe("PUT /seat/:seatId endpoint", () => {
     it("should return 404 for an invalid seatId", async () => {
         try {
             const response = await request(baseUrl)
-                .put('/seat/999') // Non-existing seatId
+                .put('/seat/999') 
                 .send(mockUpdateData)
-                .expect(404); // Expect status code 404
+                .expect(404); 
 
-            // Assertions
+            
             expect(response.body.message).toBe("Seat nicht gefunden.");
         } catch (error) {
             console.log("Test failed with error", error);
@@ -45,11 +45,11 @@ describe("PUT /seat/:seatId endpoint", () => {
     it("should return 400 for invalid request body", async () => {
         try {
             const response = await request(baseUrl)
-                .put('/seat/invalidId') // Valid seatId
-                .send({ coordinates: { x: 100, y: 200 } })  // Invalid body format
-                .expect(400); // Expect status code 400
+                .put('/seat/invalidId') 
+                .send({ coordinates: { x: 100, y: 200 } })  
+                .expect(400); 
 
-            // Assertions
+            
             expect(response.body.message).toBe("Invalid seatId format.");
         } catch (error) {
             console.log("Test failed with error", error);

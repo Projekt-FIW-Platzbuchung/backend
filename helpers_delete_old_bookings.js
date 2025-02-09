@@ -18,10 +18,10 @@ router.get("/bookings", async (req, res) => {
 */
 async function deleteOldBookings() {
   try {
-    const today = new Date().toISOString().split("T")[0]; // reformat date
+    const today = new Date().toISOString().split("T")[0]; 
 
     const result = await bookings.deleteMany({
-      date: { $lt: today }, // Assuming dates are stored as strings in "YYYY-MM-DD" format
+      date: { $lt: today }, 
     });
 
     console.log(`Deleted ${result.deletedCount} old bookings.`);

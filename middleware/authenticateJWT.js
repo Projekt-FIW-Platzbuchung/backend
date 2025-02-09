@@ -2,12 +2,12 @@ const jwt = require('jsonwebtoken');
 
 const authenticateJWT = (req, res, next) => {
 
-    console.log("Executing JWT middleware");  // Log zu Beginn der Middleware
+    console.log("Executing JWT middleware");  
 
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
-    console.log("Token received:", token); // Log Token-Empfang
+    console.log("Token received:", token); 
 
     if (token == null){
         console.warn('Access Denied - No Token');
@@ -17,15 +17,15 @@ const authenticateJWT = (req, res, next) => {
     try {
         const verified = jwt.verify(token, process.env.SECRET_KEY);
 
-        console.log("Token verified:", verified); // Log bei erfolgreicher Verifizierung
+        console.log("Token verified:", verified); 
 
         req.user = verified;
-        next(); // Token ist gültig
+        next(); 
     } catch (err) {
 
-        console.error("Token verification failed:", err.message); // Log Verifizierungsfehler
+        console.error("Token verification failed:", err.message); 
 
-        res.status(403).send('Invalid Token'); // Token ist ungültig
+        res.status(403).send('Invalid Token'); 
     }
 };
 

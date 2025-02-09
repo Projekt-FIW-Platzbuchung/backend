@@ -9,7 +9,7 @@ let mongoServer;
 
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
-  const uri = mongoServer.getUri(); // es nimmt diese uri:  mongodb://127.0.0.1:38553/
+  const uri = mongoServer.getUri(); 
 
   await mongoose.disconnect();
   await mongoose.connect(uri, {
@@ -41,7 +41,7 @@ beforeAll(async () => {
   ]);
 });
 
-// Connection schließen nach dem Testen
+
 afterAll(async () => {
   await mongoose.disconnect();
   await mongoServer.stop();
@@ -52,7 +52,7 @@ describe("bookingInformationByDate", () => {
     const date = "2026-10-10";
     const results = await bookingInformationByDate(date);
 
-    // Erwartung: nach aggregation 2 seats mit booking Data
+    
     expect(results).toHaveLength(2);
     expect(results).toBeInstanceOf(Array);
 
@@ -60,7 +60,7 @@ describe("bookingInformationByDate", () => {
     const bookedSeatAlice = results.find((result) => result.seatId === 3000);
     console.log("booked seat: ", bookedSeatAlice)
 
-    // Erwartung: Seat 1 gebucht mit bookingDetails
+    
     expect(bookedSeatAlice).toMatchObject({
       seatId: 3000,
       properties: { Table: "Tisch A1", Monitor: "24 Zoll", WindowSeat: "Ja" },
@@ -71,7 +71,7 @@ describe("bookingInformationByDate", () => {
     const bookedSeatBob = results.find((result) => result.seatId === 3001);
     console.log("free seat: ", bookedSeatBob)
 
-    // Erwartung: Seat 2 frei ohne bookingDetails
+    
     expect(bookedSeatBob).toMatchObject( {
       seatId: 3001,
       properties: { Table: 'Tisch H1', Monitor: '32 Zoll', WindowSeat: 'Nein' },

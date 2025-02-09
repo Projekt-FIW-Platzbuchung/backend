@@ -61,7 +61,7 @@ async function bookingInformationByDate(date) {
       },
     ]);
 
-    //console.log(JSON.stringify(results, null, 2));
+    
     console.log(typeof(properties))
 
     return results;

@@ -1,7 +1,7 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
-const app = require('../server'); // Importieren Sie Ihre App-Instanz von Ihrer Hauptserverdatei
+const app = require('../server'); 
 const Booking = require('../models/bookings');
 
 let mongoServer;
@@ -37,7 +37,7 @@ describe("DELETE /bookings/:id", () => {
 
     const response = await request(app)
     .delete(`/bookings/${booking._id}`)
-    .set('Authorization', `Bearer ${token}`) // Token hinzufügen
+    .set('Authorization', `Bearer ${token}`) 
     .set('Accept', 'application/json') 
     .expect(204); 
 

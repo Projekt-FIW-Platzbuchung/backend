@@ -6,16 +6,16 @@ require('dotenv').config();
 router.get('/generate-token', (req, res) => {
 
     try {
-        console.log('Generating token...');  // Log Aufruf der Token-Erzeugung
+        console.log('Generating token...');  
 
         const payload = {
-            username: 'genericUser', // Beispielnutzer*innendaten
+            username: 'genericUser', 
         };
 
         const options = { expiresIn: '1h' };
         const token = jwt.sign(payload, process.env.SECRET_KEY, options);
 
-        console.log("Token generated:", token); // Log des generierten Tokens
+        console.log("Token generated:", token); 
 
         res.send({ token });
     } catch(err) {

@@ -49,14 +49,14 @@ describe('POST /seat', () => {
   });
   it('should return 400 if seat data is invalid', async () => {
     const invalidSeat = {
-      coordinates: { x: 10 }, // y fehlt
+      coordinates: { x: 10 }, 
       properties: { Table: 'Tisch A1', Monitor: '24 Zoll', WindowSeat: 'Ja' }
     };
 
     const response = await request(app)
       .post('/seat')
       .send(invalidSeat)
-      .set('Authorization', `Bearer ${token}`) // Token hinzufügen
+      .set('Authorization', `Bearer ${token}`) 
       .set('Accept', 'application/json')
       .expect(400);
 

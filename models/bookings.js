@@ -23,7 +23,7 @@ const bookingScheme = new mongoose.Schema({
  */
 bookingScheme.pre("save", async function (next) {
   try {
-    // Check if the seat already exists in your bookings for the specified date
+   
     const existingBooking = await mongoose.model("bookings").findOne({
       seatId: this.seatId,
       date: this.date,
@@ -36,7 +36,7 @@ bookingScheme.pre("save", async function (next) {
       return next(error);
     }
 
-    // Check if the seat exists in the seats collection
+    
     const seatExists = await mongoose
       .model("seat")
       .exists({ seatId: this.seatId });
