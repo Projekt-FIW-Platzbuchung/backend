@@ -42,7 +42,8 @@ Navigate to `http://localhost:4000/api-docs`
 
 - In VSC put in your .env file 
 ```
-SECRET_KEY=DasIstSecretKeyDotEnv
+SECRET_KEY=coolesTeamPasswort
+
 ```
 - Go to Postman and Send following Request:
 ```
