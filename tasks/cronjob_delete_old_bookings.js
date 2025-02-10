@@ -1,6 +1,5 @@
 const cron = require("node-cron");
-
-const { deleteOldBookings } = require('../helpers_delete_old_bookings');
+const { deleteOldBookings } = require("../helpers_delete_old_bookings");
 
 /**
 
