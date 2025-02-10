@@ -7,6 +7,30 @@ const moment = require("moment");
 const authenticateJWT = require('./middleware/authenticateJWT');
 const { bookingInformationByDate } = require("./helpers_database_requests.js");
 
+/**
+ * @swagger
+ * /protected-resource:
+ *   get:
+ *     summary: Access a protected resource
+ *     description: Retrieves a protected resource that requires a valid JWT token.
+ *     tags:
+ *       - protected
+ *     security:
+ *       - bearerAuth: []  // JWT bearer authentication
+ *     responses:
+ *       200:
+ *         description: Successfully accessed the protected resource.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: string
+ *               example: This is a protected resource your token has accessed.
+ *       401:
+ *         description: Unauthorized access due to invalid or missing token.
+ *       500:
+ *         description: Server error.
+ */
+
 router.get("/protected-resource", authenticateJWT, (req, res) => {
   res.send('This is a protected resource your token has accessed.');
 });
@@ -203,7 +227,6 @@ router.get("/bookingstatus", authenticateJWT, async (req, res) => {
 
     // Sendet die aggregierten Daten als JSON zurück
     res.json(aggregation);
-   // console.log(aggregation);
   } catch (error) {
     console.error("Fehler beim Aufrufen des Buchungsstatus:", error);
     res.status(500).json({ error: "Ein interner Fehler ist aufgetreten." });
@@ -365,7 +388,6 @@ router.get("/bookings/user/:userId", authenticateJWT, async (req, res) => {
 router.get("/seat/:seatId", authenticateJWT, async (req, res) => {
   try {
     const seatId = parseInt(req.params.seatId, 10); // Konvertiert seatId zu einer Zahl
-    console.log(`Fetching seat details for seatId: ${req.params.seatId}`); // Debugging
     const seatDetails = await seat.findOne({ seatId: seatId });
     if (!seatDetails) {
       return res.status(404).send("Seat not found");
@@ -432,13 +454,11 @@ router.get("/seat/:seatId", authenticateJWT, async (req, res) => {
 router.delete("/seat/:seatId", authenticateJWT, async (req, res) => {
   try {
     const seatId = parseInt(req.params.seatId, 10); // Konvertiert seatId zu einer Zahl
-    console.log(`Attempting to delete seat with ID: ${seatId}`);
     const result = await seatService.deleteOneSeat(seatId);
 
     if (result.deletedCount === 0) {
       return res.status(404).json({ message: "Seat not found" });
     }
-    console.log(`Successfully deleted seat with ID: ${seatId}`);
     res.status(200).json({
         message: "Seat successfully deleted",
         seatId: seatId,
@@ -484,7 +504,6 @@ router.post("/seat", authenticateJWT, async (req, res) => {
 
     const newSeat = new seat(seatData);
     const savedSeat = await newSeat.save();
-    console.log("Saved Seat:", savedSeat);
 
     res.status(201).json(savedSeat);
   } catch (err) {
@@ -522,8 +541,6 @@ router.put("/seat/:seatId", authenticateJWT, async (req, res) => {
     const updatedCoordinates = req.body.coordinates || {}; // erwartet ein Objekt { x: value, y: value }
     const updatedProperties = req.body.properties || {}; // erwartet ein Objekt mit neuen/aktualisierten Properties
 
-    console.log("Empfangene Koordinaten vom Frontend:", updatedCoordinates);
-    console.log("Empfangene Eigenschaften vom Frontend:", updatedProperties);
 
     const seatDoc = await seat.findOne({ seatId: seatId });
     if (!seatDoc) {
@@ -540,8 +557,6 @@ router.put("/seat/:seatId", authenticateJWT, async (req, res) => {
         newCoordinates.y = updatedCoordinates.y;
       }
     }
-
-    console.log("Vorhandene Eigenschaften in der Datenbank:", seatDoc.properties);
 
     const currentProperties = seatDoc.properties || {};
 
@@ -564,7 +579,6 @@ router.put("/seat/:seatId", authenticateJWT, async (req, res) => {
       { new: true }
     );
 
-    console.log("Nach der Aktualisierung in der Datenbank:", updatedSeat.properties);
 
     res.status(200).json({ message: "Koordinaten und Eigenschaften erfolgreich aktualisiert", updatedSeat: updatedSeat });
   } catch (error) {
