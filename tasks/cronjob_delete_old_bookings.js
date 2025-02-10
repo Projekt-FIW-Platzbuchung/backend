@@ -11,7 +11,7 @@ const { deleteOldBookings } = require("../helpers_delete_old_bookings");
 
 */
 
-cron.schedule("0 15 */1 * * *", async () => {
+cron.schedule("5 0 * * *", async () => {
   console.log("Running Cron Job: Deleting old bookings");
   try {
     await deleteOldBookings();
