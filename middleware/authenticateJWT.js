@@ -1,13 +1,24 @@
 const jwt = require('jsonwebtoken');
 
-const authenticateJWT = (req, res, next) => {
+/**
+ * Middleware to authenticate a JSON Web Token (JWT).
+ *
+ * This middleware checks the Authorization header for a valid JWT.
+ * If the token is valid, it adds the decoded token data to the request object.
+ * Otherwise, it responds with an authentication error.
+ *
+ * @function authenticateJWT
+ * @memberof module:auth
+ * @param {Object} req - The Express request object, which should include the Authorization header.
+ * @param {Object} res - The Express response object, used to send back status and error messages.
+ * @param {Function} next - A callback to signal Express to move on to the next middleware or route handler.
+ * @returns {void} Sends a 401 status if no token is present, or a 403 status if the token is invalid.
+ */
 
-    console.log("Executing JWT middleware");  
+const authenticateJWT = (req, res, next) => {
 
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
-
-    console.log("Token received:", token); 
 
     if (token == null){
         console.warn('Access Denied - No Token');
@@ -16,8 +27,6 @@ const authenticateJWT = (req, res, next) => {
 
     try {
         const verified = jwt.verify(token, process.env.SECRET_KEY);
-
-        console.log("Token verified:", verified); 
 
         req.user = verified;
         next(); 

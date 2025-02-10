@@ -1,8 +1,4 @@
-const express = require("express");
-const router = express.Router();
 const seat = require("./models/seat");
-const bookings = require("./models/bookings");
-const user = require("./models/user");
 
 /**
  * Aggregates seat with booking collection as bookingDetails and bookingDetails with user-collection, adds status "frei" or "gebucht" to each seat for a date
@@ -10,7 +6,6 @@ const user = require("./models/user");
  * @return {Array} - results of aggregation: seats with properties, status and bookingDetails
  */
 async function bookingInformationByDate(date) {
-  
   try {
     const results = await seat.aggregate([
       {
@@ -61,8 +56,7 @@ async function bookingInformationByDate(date) {
       },
     ]);
 
-    
-    console.log(typeof(properties))
+    console.log(typeof properties);
 
     return results;
   } catch (error) {
@@ -72,5 +66,5 @@ async function bookingInformationByDate(date) {
 }
 
 module.exports = {
-  bookingInformationByDate
+  bookingInformationByDate,
 };
