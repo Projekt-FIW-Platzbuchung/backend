@@ -59,7 +59,7 @@ GET localhost:4000/generate-token
 - You can also open the index.html via the following terminal command on MacOS
 
 ```
-npx jsdoc . -d doku
+open doku/index.html
 
 ```
 
