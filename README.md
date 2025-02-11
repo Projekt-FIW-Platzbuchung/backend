@@ -52,3 +52,16 @@ GET localhost:4000/generate-token
 - Copy the Token and paste it into the SWAGGER UI Authorize Field and click close afterwards
 - Now you can Try out the Endpoints
 
+# View JsDoc Documentation
+- in VSC open the doku folder 
+- In there you see a file named index.html
+- Right click on it and choose "open with LiveServer" (You might need to install the LiveServer Extension)
+- You can also open the index.html via the following terminal command on MacOS
+
+```
+open doku/index.html
+
+```
+
+
+
