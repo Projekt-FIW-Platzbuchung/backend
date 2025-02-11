@@ -16,7 +16,7 @@ const { bookingInformationByDate } = require("./helpers_database_requests.js");
  *     tags:
  *       - protected
  *     security:
- *       - bearerAuth: []  // JWT bearer authentication
+ *       - bearerAuth: []  
  *     responses:
  *       200:
  *         description: Successfully accessed the protected resource.
