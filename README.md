@@ -57,6 +57,7 @@ GET localhost:4000/generate-token
 - In there you see a file named index.html
 - Right click on it and choose "open with LiveServer" (You might need to install the LiveServer Extension)
 - You can also open the index.html via the following terminal command on MacOS
+
 ```
 npx jsdoc . -d doku
 
